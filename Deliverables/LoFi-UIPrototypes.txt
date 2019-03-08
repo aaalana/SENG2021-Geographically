@@ -1,0 +1,6 @@
+Lucid Chart prototypes:
+https://www.lucidchart.com/invitations/accept/db490ad7-e310-4d36-aeed-42a1f8d66297
+
+Figma prototypes:
+https://www.figma.com/file/7AByQgJhdb5mV64i3uKotx/SENG2021-TeamA-UI-Prototypes-Combined-prototypes
+NOTE: UI Prototypes are under the Figma Page header "UI Prototype -"....

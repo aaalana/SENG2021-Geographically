@@ -1,0 +1,4 @@
+Figma prototype:
+https://www.figma.com/file/7AByQgJhdb5mV64i3uKotx/SENG2021-TeamA-UI-Prototypes-Combined-prototypes
+
+NOTE: The Figma link contains both the UI & Combined UI + Storyboard prototypes. Relavant page is the "Combined prototypes" page
