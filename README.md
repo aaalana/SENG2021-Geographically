@@ -23,8 +23,8 @@ Angular.js 	for frontend framework/implementation
 Node.js	for backend 
 
 ## Group members:
-+Alana Hua		      z5209503
-+Elizabeth Zhong 	  z5209166
-+Galen Rowell		    z5214822
-+Mandy Chen 		    z5205689
-+Winston Darmawan	  z5205439
++ Alana Hua		      z5209503
++ Elizabeth Zhong 	  z5209166
++ Galen Rowell		    z5214822
++ Mandy Chen 		    z5205689
++ Winston Darmawan	  z5205439
