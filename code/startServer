@@ -1,8 +1,8 @@
 #!/bin/bash
 
 echo "|ATTEMPTING TO START THE VIRTUAL ENVIRONMENT"
-echo "===source ./geographicallyVENV/bin/activate"
-source ./geographicallyVENV/bin/activate
+echo "===source ./VENV/bin/activate"
+source ./VENV/bin/activate
 
 echo "|INSTALLING 'requirements.txt' WITH PIP3"
 echo "===pip3 install -r requirements.txt"
