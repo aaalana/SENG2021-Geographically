@@ -1,10 +1,10 @@
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
 @app.route('/')
 def test_page():
-    return "Now we just need the whole finished project (Geographically) to put on the server..."
+    return render_template("index.html")
 
 if __name__ == '__main__':
     app.run()
