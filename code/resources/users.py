@@ -3,8 +3,8 @@ from flask_restful import Resource, Api
 
 
 class Users(Resource):
-    def get(self, id):
-        pass
+    def get(self):
+        return "users data here, should be 'API'-i-fied"
 
     def put(self, id):
         pass 
