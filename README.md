@@ -2,10 +2,18 @@
 ## UNSW Sydney SENG2021 19T1 - A group project focused on solving map discovery and integration problems
 
 ## How to install/run:
-1. Read dependancies, most are covered by the installer:
-  + Python, flask...etc
-2. Download GitHub project
-3. Run installer
+1. Clone git repo
+  + 'git clone git@github.com:unsw-se2021/Geographically.git'
+2. Install following requirements
+  + git
+  + python3
+  + virtualenv
+3. Create a virtual environment named "VENV"
+  + 'virtualenv VENV'
+4. Start the server with the custom script
+  + './startServer'
+  + NOTE: It may need to be made executable with 'chmod 754 startServer'
+  + This will install all the python3 dependancies through pip3 into the virtual environment
 
 ## Helpful links:
 + Report link: https://goo.gl/djYYDv
@@ -14,13 +22,7 @@
 + WebCMS SENG2021 link: https://webcms3.cse.unsw.edu.au/SENG2021/19T1/
 
 ## Technology stack:
-The MEAN software stack focuses primarily on an innovative set of libraries built upon Javascript. Such a stack allows easy integration from frontend to backend. The MEAN stack notably has great documentation, support and community to further assist whilst programming in this environment.
 
-The MEAN web development stack: GitHub Repo, Website
-MongoDB 	for database
-Express.js 	for backend web dev (linking Node.js to front end)
-Angular.js 	for frontend framework/implementation 
-Node.js	for backend 
 
 ## Group members:
 + Alana Hua		      z5209503
