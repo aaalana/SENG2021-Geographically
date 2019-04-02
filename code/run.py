@@ -1,9 +1,12 @@
 ### Import dependancies/libraries
+# Flask API & Auth dependancies
 from flask import Flask, request, abort, jsonify, url_for
 from flask_restful import Api, Resource
+from flask_cors import CORS
+# Database dependancies
 from pymongo import MongoClient
 
-### Import resources
+### Import API resources
 from resources.users import Users
 
 ### Set up/connect to the Mongo Database
@@ -14,6 +17,7 @@ users = db.users
 ### Set 'flask' environment settings
 app = Flask(__name__)
 api = Api(app)
+CORS(app)
 
 @app.route('/')
 def test_page():
