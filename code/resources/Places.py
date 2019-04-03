@@ -17,6 +17,7 @@ def findRestaurant (loc):
     lat, lng = loc
     type = "restaurant"
     url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={lat},{lng}&radius={radius}&type={type}&key={APIKEY}".format(lat = lat, lng = lng, radius = radius, type = type,APIKEY = APIKEY)
+    print(url)
     response = requests.get(url)
     res = json.loads(response.text)
     #prints out info in a simplified format
@@ -25,15 +26,17 @@ def findRestaurant (loc):
         print(info)
     return res
 
+#returns locations of the first page of google for sydney tourist attractions
 def findPointsOfInterest():
     location = "sydney"
     url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query={location}+point+of+interest&language=en&key={APIKEY}".format(location=location, APIKEY=APIKEY)
     response = requests.get(url)
     res = json.loads(response.text)
     for result in res["results"]:
-        info = ";".join(map(str,[result["routes"]["legs"]]))
-        print(info)
+        print(result["name"])
+    return res["results"]
 
+#get current location
 def getCurrentLocation():
     g = geocoder.ip('me')
     lat = str(g.latlng[0])
@@ -41,5 +44,5 @@ def getCurrentLocation():
     return lat, lng
 
 print(getCurrentLocation())
-#findRestaurant(getCurrentLocation())
+findRestaurant(getCurrentLocation())
 findPointsOfInterest()

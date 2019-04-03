@@ -11,8 +11,8 @@ def findRoute(start, finish):
     response = requests.get(url)
     res = json.loads(response.text)
 
-    for result in res["routes"]:
-        info = ";".join(map(str,[result["legs"]["start_address"]["end_address"],result["legs"]["distance"]["text"]]))
-        print(info)
+    print(res["routes"][0]["legs"][0]["start_address"] + " to " + res["routes"][0]["legs"][0]["end_address"] +" Distance: " + res["routes"][0]["legs"][0]["distance"]["text"] + " Duration" +  res["routes"][0]["legs"][0]["duration"]["text"])
+    #print(res["routes"]["legs"]["start_address"])
+        #print(routes["legs"]["start_address"] + routes["legs"]["end_address"] + routes["legs"]["distance"]["text"])    
 
 findRoute("Bridgewater, Sa, Australia", "Stirling, SA, Australia")

@@ -1,13 +1,16 @@
 var map, infoWindow;
 // function creates a map to put into browser
 function createMap () {
+  var directionsService = new google.maps.DirectionsService();
+  var directionsDisplay = new google.maps.DirectionsRenderer();
   var options = {
     center: { lat: -33.8688, lng: 151.2093 },
     zoom: 10
-  };
+  };                   
   
   map = new google.maps.Map(document.getElementById('map'), options);
-  
+  directionsDisplay.setMap(map);
+   
   // ==== handles geolocation ====
   infoWindow = new google.maps.InfoWindow;
 
@@ -21,7 +24,7 @@ function createMap () {
         infoWindow.setContent('Your location!');
         infoWindow.open(map);
     }, function () {
-        handleLocatiionError('Geolocation service failed', map.center());
+        handleLocationError('Geolocation service failed', map.center());
 
     })
   } else {
@@ -70,6 +73,23 @@ function createMap () {
   });
 }  
 
+function calcRoute() {
+  var selectedMode = document.getElementById('mode').value;
+  var request = {
+      origin: haight,
+      destination: oceanBeach,
+      // Note that Javascript allows us to access the constant
+      // using square brackets and a string value as its
+      // "property."
+      travelMode: google.maps.TravelMode[selectedMode]
+  };
+  directionsService.route(request, function(response, status) {
+    if (status == 'OK') {
+      directionsDisplay.setDirections(response);
+    }
+  });
+}
+
 function handleLocationError (content, position) {
     infoWindow.setPosition(position);
     infoWindow.setContent(content);
@@ -77,3 +97,4 @@ function handleLocationError (content, position) {
 
 
   }
+}
