@@ -34,7 +34,7 @@ def findPointsOfInterest():
     res = json.loads(response.text)
     for result in res["results"]:
         print(result["name"])
-    return res["results"]
+    return res["results"][0]
 
 #get current location
 def getCurrentLocation():
@@ -43,6 +43,17 @@ def getCurrentLocation():
     lng = str(g.latlng[1])
     return lat, lng
 
+def getPhotoId(location):
+    print(location["photos"][0]["photo_reference"])
+    return location["photos"][0]["photo_reference"]
+
+def getPhotoLocation(refID):
+    width = 400
+    url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth={width}&photoreference={refID}&key={APIKEY}" 
+
+
 print(getCurrentLocation())
 findRestaurant(getCurrentLocation())
 findPointsOfInterest()
+id = getPhotoId(findPointsOfInterest())
+getPhotoLocation(id)

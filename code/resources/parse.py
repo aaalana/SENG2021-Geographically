@@ -17,7 +17,13 @@ def getPlaceSummary(place):
     R = S.get(url=URL)
     DATA = R.json()
 
+
+    if (DATA["title"] == 'Not found.'):
+        print ("No information found")
+        return "No information found"
+
     print(DATA["extract"])
+
     return(DATA["extract"])
 
 getPlaceSummary("Chinese Garden of Friendship")
