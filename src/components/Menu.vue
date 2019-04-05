@@ -19,7 +19,9 @@
           </v-list-tile-content>
 
           <v-list-tile-action>
-              <v-icon @click.stop="mini = !mini">chevron_left</v-icon>
+              <v-btn icon @click.stop="mini = !mini">
+                <v-icon>chevron_left</v-icon>
+              </v-btn>
           </v-list-tile-action>
         </v-list-tile>
       </v-list>

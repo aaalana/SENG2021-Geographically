@@ -26,6 +26,11 @@ export default new Router({
       name: 'map',
       component: () => import('./views/Maps.vue')
     },
+    {
+      path: '/blog',
+      name: 'blog',
+      component: () => import('./views/Blog.vue')
+    },
     // 404 page not found 
     {
       path: '*',

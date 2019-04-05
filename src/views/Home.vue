@@ -8,7 +8,7 @@
     </div>
    
     <div class="text-xs-center">
-      <v-btn round color="info" large>Try Geographically Today</v-btn>
+      <v-btn id="start" round color="info" large>Try Geographically Today</v-btn>
     </div>
     
     <div id="markPosition">
@@ -94,7 +94,7 @@ export default {
   width:100%;
 }
 
-.v-btn {
+#start {
   font-size: 27px;
   border-radius: 100px;
   min-width: 450px;
