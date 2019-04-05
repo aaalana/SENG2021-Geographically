@@ -1,0 +1,97 @@
+<template>
+  <v-app>
+    <div>
+      <v-container fluid>
+      <v-layout row wrap>
+        <v-flex d-flex xs1 sm1 md1>
+          <sidebar />
+        </v-flex>
+        <v-flex d-flex xs6 sm6 md6 order-lg2>
+          <v-layout column>
+            <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
+            <h1 style="font-family:Quicksand; font-size:30px;">Plan</h1> 
+            <v-flex d-flex xs4 sm4 md4>   
+              <timeline />
+            </v-flex>
+            <v-flex d-flex xs12 sm12 md12 order-lg2>
+              <v-layout row wrap>
+                <randomMap />
+                <v-divider></v-divider>
+              </v-layout>
+            </v-flex>
+          </v-layout>
+        </v-flex>
+        <v-flex d-flex xs4 offset-xs1 offset-sm1 offset-md1 order-lg3>
+          <v-layout column>
+            <v-flex d-flex xs4></v-flex>
+            <v-flex d-flex xs4 sm4 md4 order-lg2>
+              <v-layout row wrap>
+                <v-flex xs5>
+                  <selectDate />
+                </v-flex>
+                <v-flex xs1></v-flex>
+                <v-flex xs5>
+                  <selectTime />
+                </v-flex>
+              </v-layout>
+            </v-flex>
+            <v-flex d-flex xs6 sm6 md6 order-lg3>
+              <v-layout row wrap>
+                <v-flex xs7></v-flex>
+                <v-flex xs5 order-lg2>
+                  <v-btn flat><v-icon>save</v-icon>Save trip</v-btn>
+                </v-flex>
+              </v-layout>
+            </v-flex>
+            <v-flex d-flex xs8 sm8 md8 order-lg4>
+              <p style="font-family:Quicksand; font-size:15px;">
+                LENGTH OF TRIP<br>
+                <br>
+                WEATHER AT ARRIVAL<br>
+                <!--11&#0176;C--><br>
+                MY TRIP PLAYLIST<br><v-divider></v-divider>
+              </p>
+            </v-flex>
+          </v-layout>
+        </v-flex>
+      </v-layout>
+      </v-container>
+    </div>
+  </v-app>
+</template>
+
+<script>
+  import sidebar from '@/components/sidebar.vue'
+  import timeline from '@/components/timeline.vue'
+  import selectDate from '@/components/selectDate.vue'
+  import selectTime from '@/components/selectTime.vue'
+  import randomMap from '@/components/randomMap.vue'
+  
+  export default {
+    name: 'App',
+    components: {
+      sidebar,
+      timeline,
+      selectDate,
+      selectTime,
+      randomMap
+    }
+}
+</script>
+
+<style>
+  body {
+    background-color: white;
+  }
+
+  h1 {
+    color: black;
+    text-align: left;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+  }
+</style>
