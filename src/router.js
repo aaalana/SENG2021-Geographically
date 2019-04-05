@@ -31,6 +31,11 @@ export default new Router({
       name: 'blog',
       component: () => import('./views/Blog.vue')
     },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: () => import('./views/Dashboard.vue')
+    },
     // 404 page not found 
     {
       path: '*',
