@@ -39,7 +39,7 @@
 
 
     <ContactUs />
-    <NavBar />
+    <Menu />
     <Footer />
   </div>
 </template>
