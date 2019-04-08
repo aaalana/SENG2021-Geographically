@@ -45,14 +45,14 @@
 </template>
 
 <script>
-import NavBar from '@/components/NavBar.vue'
 import Footer from '@/components/Footer.vue'
+import Footer from '@/components/Menu.vue'
 
 export default {
   name: 'dashboard',
   components: {
-    NavBar,
-    Footer
+    Footer,
+    Menu
   },
   data () {
     return {
