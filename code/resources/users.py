@@ -6,5 +6,8 @@ class Users(Resource):
     def get(self):
         return "users data here, should be 'API'-i-fied"
 
-    def put(self, id):
+    def get(self, id):
+        return "users data here, should be 'API'-i-fied"
+
+    def post(self, id):
         pass 

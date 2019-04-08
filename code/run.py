@@ -14,6 +14,8 @@ client = MongoClient("mongodb://localhost:27017/")
 db = client.geographically_DB
 users = db.users
 
+### Test 
+
 ### Set 'flask' environment settings
 app = Flask(__name__)
 api = Api(app)
