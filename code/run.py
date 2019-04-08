@@ -1,10 +1,16 @@
 from flask import Flask, render_template
 from flask_restful import reqparse, abort, Api, Resource
+from flask_cors import CORS
 from resources.Places import *
 from resources.Routing import *
 
 app = Flask(__name__)
 api = Api(app)
+app.config.from_object(__name__)
+
+# enable CORS
+CORS(app)
+
 
 #we should get a json returning from the other functions and call it from here
 start = "Bridgewater, Sa, Australia"
@@ -24,7 +30,7 @@ api.add_resource(Recommendations, '/recommendation')
 api.add_resource(Routing, '/trips')
 @app.route('/')
 def test_page():
-    return render_template("index.html")
+    return jsonify(recommendations)
 
 if __name__ == '__main__':
     app.run()

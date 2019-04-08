@@ -34,7 +34,8 @@ class Places(Resource):
         res = json.loads(response.text)
         for result in res["results"]:
             print(result["name"])
-        return res["results"][0]
+        print(res["results"])
+        return res["results"]
 
     #get current location
     def getCurrentLocation():
@@ -54,6 +55,6 @@ class Places(Resource):
 
 #print(getCurrentLocation())
 #findRestaurant(getCurrentLocation())
-#findPointsOfInterest()
+Places.findPointsOfInterest()
 #id = getPhotoId(findPointsOfInterest())
 #getPhotoLocation(id)
