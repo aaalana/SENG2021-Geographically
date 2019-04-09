@@ -46,7 +46,7 @@
 
 <script>
 import Footer from '@/components/Footer.vue'
-import Footer from '@/components/Menu.vue'
+import Menu from '@/components/Menu.vue'
 
 export default {
   name: 'dashboard',
