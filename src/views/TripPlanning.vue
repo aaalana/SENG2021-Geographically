@@ -45,11 +45,11 @@
             </v-flex>
             <v-flex d-flex xs8 sm8 md8 order-lg4>
               <p style="font-family:Quicksand; font-size:15px;">
-                LENGTH OF TRIP<br>
+                LENGTH OF TRIP<br> {{msg["length"]}}
                 <br>
                 WEATHER AT ARRIVAL<br>
                 <!--11&#0176;C--><br>
-                MY TRIP PLAYLIST<br><v-divider></v-divider>
+                MY TRIP PLAYLIST<br><v-divider></v-divider> {{summary}}
               </p>
             </v-flex>
           </v-layout>
@@ -66,6 +66,7 @@
   import selectDate from '@/components/selectDate.vue'
   import selectTime from '@/components/selectTime.vue'
   import randomMap from '@/components/randomMap.vue'
+  import axios from 'axios';
   
   export default {
     name: 'App',
@@ -75,7 +76,45 @@
       selectDate,
       selectTime,
       randomMap
-    }
+    },
+    data() {
+      return {
+        msg: [],
+        summary:[],
+      };
+    },
+    methods: {
+      getTrip() {
+        const path = 'http://localhost:5000/trips';
+        axios.get(path)
+          .then((res) => {
+            this.msg = res.data;
+          })
+          .catch((error) => {
+            // eslint-disable-next-line
+            console.error(error);
+          });
+      },
+      getTripSummary() {
+        const path = 'http://localhost:5000/trips/summary';
+        axios.get(path)
+          .then((res) => {
+            this.summary = res.data;
+          })
+          .catch((error) => {
+            // eslint-disable-next-line
+            console.error(error);
+          });
+      
+      
+      }
+    },
+      
+      
+      created() {
+        this.getTrip();
+        this.getTripSummary();
+      },
 }
 </script>
 

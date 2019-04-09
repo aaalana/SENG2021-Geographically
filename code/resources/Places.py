@@ -29,7 +29,7 @@ class Places(Resource):
     #returns locations of the first page of google for sydney tourist attractions
     def findPointsOfInterest():
         location = "sydney"
-        url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query={location}+point+of+interest&language=en&key={APIKEY}".format(location=location, APIKEY=APIKEY)
+        url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query={location}+points+of+interest&language=en&key={APIKEY}".format(location=location, APIKEY=APIKEY)
         response = requests.get(url)
         res = json.loads(response.text)
         for result in res["results"]:
@@ -44,17 +44,42 @@ class Places(Resource):
         lng = str(g.latlng[1])
         return lat, lng
 
-    def getPhotoId(location):
-        print(location["photos"][0]["photo_reference"])
-        return location["photos"][0]["photo_reference"]
-
-    def getPhotoLocation(refID):
+    def getPhoto(location):
+        refID = location["photos"][0]["photo_reference"]
         width = 400
-        url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth={width}&photoreference={refID}&key={APIKEY}" 
+        url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth={width}&photoreference={refID}&key={APIKEY}".format(width = width, refID = refID, APIKEY = APIKEY) 
+        print(url)
+        return url
 
+    def getPlacesInfo(locationstr):
+        locationstr = locationstr.replace(' ','%20' )
+        
+        url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input={locationstr}&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key={APIKEY}"
+        print(url)
+    def getPhotoRecs(locations):
+        
+        lst = []
+        k = 0
+        for pn in locations:
+            k = k + 1
+            if k == 1:
+                continue
+            if k == 10:
+                break
+            d = {}
+            refID =pn["photos"][0]["photo_reference"]
+            width = 1000
+            url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth={width}&photoreference={refID}&key={APIKEY}".format(width = width, refID = refID, APIKEY = APIKEY) 
+            d['src'] = url
+            lst.append(d)
+        print(lst)
+        return json.dumps(lst)
 
 #print(getCurrentLocation())
 #findRestaurant(getCurrentLocation())
-Places.findPointsOfInterest()
+#Places.findPointsOfInterest()
+locations = Places.findPointsOfInterest()
+Places.getPhotoRecs(locations)
+    #print(location["photos"][0]["photo_reference"])
 #id = getPhotoId(findPointsOfInterest())
 #getPhotoLocation(id)

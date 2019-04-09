@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
+import Ping from '@/components/Ping';
 
 Vue.use(Router)
 
@@ -45,6 +46,12 @@ export default new Router({
       path: '/myProfile',
       name: 'myProfile',
       component: () => import('./views/MyProfile.vue')
+    },
+    //test route for backend
+    {
+      path: '/Ping',
+      name: 'Ping',
+      component: Ping,
     },
     // 404 page not found 
     {
