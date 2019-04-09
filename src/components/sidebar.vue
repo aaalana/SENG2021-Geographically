@@ -59,7 +59,7 @@
           { title: 'Map Mode', icon: 'map', route: '/map'},
           { title: 'Trip Planning', icon: 'directions_car', route: 'tripPlanning'},
           { title: 'Playlists', icon: 'queue_music', route: '/playlists'},
-          { title: 'My Blog', icon: 'library_books', route: '/myBlog'},
+          { title: 'My Blog', icon: 'library_books', route: '/blog'},
           { title: 'Log Out', icon: 'subdirectory_arrow_left', route: '/'}
         ],
         mini: true
