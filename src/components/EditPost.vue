@@ -17,8 +17,10 @@
                         </v-menu>
                         
                         <v-spacer></v-spacer>
-
-                        <v-btn flat class="info mx-0 mt-3" @click="publish" :loading="loading">Save and Publish</v-btn>
+                        <v-card-actions>
+                            <v-btn flat class="info mx-0 mt-3 mr-3" @click="dialog = !dialog">Close</v-btn>
+                            <v-btn flat class="info mx-0 mt-3" @click="publish" :loading="loading">Save</v-btn>
+                        </v-card-actions>
                     </v-form>
                 </v-card-text>
             </v-card>
