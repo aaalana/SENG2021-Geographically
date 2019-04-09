@@ -58,7 +58,7 @@ export default {
         publish() {
             if(this.$refs.form.validate()) {
                 this.loading = true; //use this when we actually put it in the database to show a loading sign
-                console.log(this.title, this.content)
+                //console.log(this.title, this.content)
                 this.loading = false;
                 this.dialog = false;
                

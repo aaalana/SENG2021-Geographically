@@ -8,7 +8,11 @@ class Route(Resource):
     def findRouteInfo(start, end):
         #start = "Bridgewater, Sa, Australia"
         #finish = "Stirling, SA, Australia"
-
+        print(start)
+        if isinstance(start, tuple):
+            start = str(start[0]+','+start[1]) 
+        print(start)
+        print(end)
         url = "https://maps.googleapis.com/maps/api/directions/json?origin={start}&destination={end}&key={APIKEY}".format(start = start, end = end, APIKEY=APIKEY)
         response = requests.get(url)
         res = json.loads(response.text)

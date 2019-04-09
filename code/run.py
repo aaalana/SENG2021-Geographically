@@ -14,7 +14,7 @@ CORS(app)
 
 
 #we should get a json returning from the other functions and call it from here
-start = "Sydney"
+start = Places.getCurrentLocation()
 end = "Canberra"
 
 recommendations = Places.findPointsOfInterest()
@@ -45,11 +45,10 @@ class DestinationPhoto(Resource):
     def get(self):
         return photo
 
-
-        return summary
 api.add_resource(Recommendations, '/recommendation')
 api.add_resource(Routing, '/trips')
 api.add_resource(Summary, '/trips/summary')
+api.add_resource(DestinationPhoto, '/trips/photo')
 @app.route('/')
 def test_page():
     return Recommendations
