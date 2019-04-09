@@ -46,7 +46,12 @@ export default new Router({
       name: 'myProfile',
       component: () => import('./views/MyProfile.vue')
     },
-    // 404 page not found 
+    {
+      path: '/playlists',
+      name: 'playlists',
+      component: () => import('./views/Playlists.vue')
+    },
+    // 404 page not found
     {
       path: '*',
       name: 'NotFound',
