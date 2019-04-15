@@ -36,37 +36,55 @@
                 <p class="title" style="padding-bottom:80px;">Geographically is a simple and easy-to-use online trip planning tool that allows you to plan your own travel itineraries.</p>
               </v-flex>
             </v-layout>
-            <v-layout row justify-center wrap>
-              <v-flex xs13>
-                <v-img aspect-ratio="1" :src="require('../assets/music.png')" height="250px" width="250px" style="opacity:0.4; margin-left: 100px;"/>
-                <br><br><p class="display-1 text-xs-center">Listen to our customised <br> trip playlist</p>
+            <v-layout row wrap justify-center class="text-xs-center">
+              <v-flex xs4>
+                <v-img aspect-ratio="1" :src="require('../assets/music.png')" height="100%" width="50%" style="opacity:0.4; margin: auto"/>
+              </v-flex>
+        
+              <v-flex xs4>
+                <v-img aspect-ratio="1" :src="require('../assets/history.png')" height="100%" width="50%" style="opacity:0.5; margin: auto"/>
               </v-flex>
 
-              <v-flex xs13>
-                <v-img aspect-ratio="1" :src="require('../assets/history.png')" height="250px" width="250px" style="opacity:0.5; margin-left: 150px;"/>
-                <br><br><p class="display-1 text-xs-center" style="margin-left: 50px;">Check the history of<br> a location</p>
+              <v-flex xs4>
+                <v-img aspect-ratio="1" :src="require('../assets/weather.png')" height="100%" width="50%" style="opacity:0.5; margin: auto"/>
               </v-flex>
+            </v-layout>
 
-              <v-flex>
-                <v-img aspect-ratio="1" :src="require('../assets/weather.png')" height="250px" width="250px" style="opacity:0.5; margin-left: 150px;"/>
-                <br><br><p class="display-1 text-xs-center" style="margin-left: 50px; padding-bottom:20px;">Get real-time data<br> on locations</p><br><br><br>
+            <v-layout row wrap justify-center class="text-xs-center" style="padding-bottom:20px;">
+              <v-flex xs4>
+                <br><p class="display-1" >Listen to our customised <br> trip playlist</p>
+              </v-flex>
+              <v-flex xs4>
+                <br><p class="display-1">Learn about the history of<br> a location</p>
+              </v-flex>
+              <v-flex xs4>
+                <br><p class="display-1">Get real-time data<br> on locations</p><br><br><br>
               </v-flex>
             </v-layout>
 
             <v-layout row justify-center wrap>
-              <v-flex xs13>
-                <v-img aspect-ratio="1" :src="require('../assets/map.png')" height="250px" width="250px" style="opacity:0.4; margin-left: 100px;"/>
-                <br><p class="display-1 text-xs-center">Find routes to nearby <br> hotels and tourist<br> attractions</p>
+              <v-flex xs4>
+                <v-img aspect-ratio="1" :src="require('../assets/map.png')"  height="100%" width="50%" style="opacity:0.4; margin: auto"/>
               </v-flex>
 
-              <v-flex xs13>
-                <v-img aspect-ratio="1" :src="require('../assets/rate.png')" height="250px" width="250px" style="opacity:0.4; margin-left: 150px;"/>
-                <br><p class="display-1 text-xs-center" style="margin-left: 50px;">Rate and review the<br>places you visit</p>
+              <v-flex xs4>
+                <v-img aspect-ratio="1" :src="require('../assets/rate.png')"  height="100%" width="50%" style="opacity:0.4; margin: auto"/>
               </v-flex>
 
-              <v-flex>
-                <v-img aspect-ratio="1" :src="require('../assets/free.png')" height="250px" width="250px" style="opacity:0.4; margin-left: 150px;"/>
-                <br><p class="display-1 text-xs-center" style="margin-left: 50px; padding-bottom:200px;">Feel free to use without<br>any service fees</p>
+              <v-flex xs4>
+                <v-img aspect-ratio="1" :src="require('../assets/free.png')" height="100%" width="50%" style="opacity:0.4; margin: auto"/>
+              </v-flex>
+
+            </v-layout>
+             <v-layout row wrap justify-center class="text-xs-center" style="padding-bottom:20px;">
+              <v-flex xs4>
+                <br><p class="display-1">Find routes to nearby <br> hotels and tourist<br> attractions</p><br><br><br>
+              </v-flex>
+              <v-flex xs4>
+                <br><p class="display-1">Rate and review the<br>places you visit</p>
+              </v-flex>
+              <v-flex xs4>
+                <br><p class="display-1">Feel free to use without<br>any service fees</p>
               </v-flex>
             </v-layout>
           </v-container>
