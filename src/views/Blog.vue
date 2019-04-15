@@ -3,12 +3,12 @@
         <v-content>
             <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
             <v-flex mb-4>
-                <h1 class="display-2 font-weight-bold mb-3">
+                <h1 class="mb-3" style="font-family: Quicksand; font-size: 30px">
                     <br>My Blog
                 </h1>
-                <h1 class="display-1 font-weight-bold mb-3">
-                    <br>Posts
-                </h1>
+                <h2 class="mb-3" style="font-family: Quicksand; font-size: 20px">
+                    Posts
+                </h2>
                 <AddPost />
             </v-flex>
             <v-container class="my-5">

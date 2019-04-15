@@ -10,7 +10,7 @@
     <v-layout justify-center class="text-xs-center">
       <v-flex xs12>
           <p class="title" id="intro"> Do you always struggle to plan your trip? No worries, <br> we got you covered. </p>
-     </v-flex>
+      </v-flex>
     </v-layout>
    
 

@@ -6,7 +6,7 @@
       <v-layout row wrap>
         <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
         <v-flex>
-          <br><v-card-title class="display-1" style="font-family: Quicksand">Map Mode</v-card-title>
+          <br><v-card-title style="font-family: Quicksand"><h1>Map Mode</h1></v-card-title>
         </v-flex>
         <v-spacer></v-spacer>
         <v-flex mt-4 mr-4>
