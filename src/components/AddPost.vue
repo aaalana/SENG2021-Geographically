@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     data() {
         return {
@@ -48,7 +49,7 @@ export default {
             content: '',
             date: null,
             inputRules: [
-                v => v.length > 3 || 'Minimum length is 3 characters'
+                v => v.length > 1 || 'Minimum length is 2 characters'
             ],
             loading: false,
             dialog: false
@@ -57,11 +58,31 @@ export default {
     methods: {
         publish() {
             if(this.$refs.form.validate()) {
-                this.loading = true; //use this when we actually put it in the database to show a loading sign
-                console.log(this.title, this.content)
+                //use this when we actually put it in the database to show a loading sign
+                this.loading = true; 
+                
+                let newBlogPost = {
+                    title: this.title,
+                    content: this.content,
+                    date: this.date
+                }
+
+                console.log(newBlogPost);
+                
+                // store in database via a post method
+                axios.post('http://127.0.0.1:5000/blog')
+                // if the response is correct
+                .then((response) => {
+                    console.log(response);
+                })
+                // if the response is incorrect
+                .catch((error) => {
+                    console.log(error);
+                });
+                // stop loading and close the window
                 this.loading = false;
                 this.dialog = false;
-               
+                this.$emit('blogPostAdded')
             }
         }
     }

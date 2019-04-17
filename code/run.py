@@ -6,7 +6,7 @@ from resources.Routing import *
 from pymongo import MongoClient
 
 ### Import resources
-from resources.users.py import Users
+from resources.users import Users
 
 ### Set up/connect to the Mongo Database
 client = MongoClient("mongodb://localhost:27017/")
@@ -38,7 +38,7 @@ def test_page():
     return render_template("index.html")
 
 ### Add the Flask_RESTful resources here
-api.add_resource(Users, '\Users')
+api.add_resource(Users, '/Users')
 
 ### Start the server, (called through 'serverStart' script)
 if __name__ == '__main__':

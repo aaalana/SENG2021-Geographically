@@ -1,5 +1,11 @@
 <template>
     <div class="blog">
+        <nav>
+            <v-snackbar v-model="snackbar" :timeout="4000" top color="info">
+                <span>You have successfully published your blog post.</span>
+                <v-btn flat color="white" @click="snackbar = false">Close</v-btn>
+            </v-snackbar>
+        </nav>
         <v-content>
             <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
             <v-flex mb-4>
@@ -9,7 +15,7 @@
                 <h1 class="display-1 font-weight-bold mb-3">
                     <br>Posts
                 </h1>
-                <AddPost />
+                <AddPost @blogPostAdded="snackbar = true" />
             </v-flex>
             <v-container class="my-5">
                     <v-card v-for="blog in blogs" :key="blog.title">
@@ -60,7 +66,8 @@ export default {
           blogs: [
               {title: 'blog1', date: '1/2/19'},
               {title: 'blog2', date: '2/3/19'}
-          ]
+          ],
+          snackbar: false
       }
   }
 }
