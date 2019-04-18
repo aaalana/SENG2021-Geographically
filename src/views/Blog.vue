@@ -17,33 +17,33 @@
                 </h1>
                 <AddPost @blogPostAdded="snackbar = true" />
             </v-flex>
-            <v-container class="my-5">
-                    <v-card v-for="blog in blogs" :key="blog.title">
-                        <v-layout row wrap :class="'pa-3 blog ${blog.status}'"> 
-                            <v-flex>
-                                <v-icon large left>description</v-icon>
-                                <span class="headline">{{ blog.title }}</span>
-                            </v-flex>
-                            <v-flex>
+            <div v-if="posts.length === 0"><h3 class= "font-weight-regular">You have no blog posts.</h3></div>
+            <v-container v-else class="my-5">
+                <v-card v-for="post in posts" :key="post.id">
+                    <v-layout row wrap :class="'pa-3 post ${post.status}'"> 
+                        <v-flex xs6 md4>
+                            <v-icon large left>description</v-icon>
+                            <span class="headline">{{ post.title }}</span>
+                        </v-flex>
+                        <v-flex>
                             <v-card-actions>
-                                <EditPost />
-                                <v-btn flat fab><v-icon>delete</v-icon></v-btn>
+                                <v-flex xs4 sm1 md4><EditPost :post="post"/></v-flex>
+                                <v-flex xs4 sm1 md4><v-btn @click="deletePost(post)" flat fab><v-icon>delete</v-icon></v-btn></v-flex>
                             </v-card-actions>
-                            </v-flex>
+                        </v-flex>
 
-                            <v-flex> <div class="caption grey--text">Date</div><div>{{ blog.date}}</div></v-flex>
-                            <!--<v-flex> <div class="caption grey--text">Status</div><div>{{blog.status}}</div></v-flex>-->
+                        <v-flex xs6 sm4 md2> <div class="caption grey--text">Date</div><div>{{ post.date }}</div></v-flex>
                             
-                            <v-spacer></v-spacer>
+                      <v-spacer></v-spacer>
 
-                            <v-flex>
+                        <v-flex>
                             <v-card-actions class="text-xs-center">
                                 <v-btn round style="border-radius:7px; width:250px; height:50px;" color="info" class="font-weight-regular subheading" dark>VIEW BLOG POST</v-btn>
                             </v-card-actions>
-                            </v-flex>
-                        </v-layout>
-                    </v-card>
-                </v-container>
+                        </v-flex>
+                    </v-layout>
+                </v-card>
+            </v-container>
         </v-content>
         <Menu />
     </div>
@@ -54,22 +54,55 @@
 import Menu from '@/components/Menu.vue'
 import AddPost from '@/components/AddPost.vue'
 import EditPost from '@/components/EditPost.vue'
+import db from '@/fb'
 export default {
-  name: 'blog',
-  components: {
-    Menu,
-    AddPost,
-    EditPost
-  },
-  data() {
-      return {
-          blogs: [
-              {title: 'blog1', date: '1/2/19'},
-              {title: 'blog2', date: '2/3/19'}
-          ],
-          snackbar: false
-      }
-  }
+    name: 'blog',
+    components: {
+        Menu,
+        AddPost,
+        EditPost
+    },
+    data() {
+        return {
+            posts: [],
+            snackbar: false,
+        }
+    },
+    methods: {
+        deletePost(post) {
+            // delete post from the database
+            db.collection('posts').doc(post.id).delete().then(function() {
+                console.log("Post successfully deleted!");
+            }).catch(function(error) {
+                console.error("Error removing post: ", error);
+            });
+            
+            // delete post from the post array that shows the posts list on the webpage
+            let index
+            for (let i = 0; i < this.posts.length; i++) {
+                if (post.id === this.posts[i].id) {
+                    index = i
+                    break
+                }
+            }
+            this.posts.splice(index, 1)
+        }
+    },
+    created() {
+        db.collection('posts').onSnapshot(response => {
+            const changes = response.docChanges();
+            // loop through changes made in the firestore database
+            changes.forEach(change => {
+                if  (change.type === 'added') {
+                    // push to the posts array 
+                    this.posts.push({
+                        ...change.doc.data(),
+                        id: change.doc.id
+                    })
+                } 
+            })
+        })
+    }
 }
 </script>
 
