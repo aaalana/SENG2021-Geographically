@@ -60,7 +60,6 @@ export default {
             // closes the add post window/pop up
             dialog: false,
             // array of blog posts
-            posts: [],
             postId: this.post.id,
             // hard-coded user - change later
             user: 'Tom'
@@ -93,6 +92,7 @@ export default {
                 this.loading = false;
                 this.dialog = false;
                 this.$emit('blogPostUpdated')
+                this.$emit('updateFrontEnd')
             }
         }
         /*
@@ -101,18 +101,14 @@ export default {
             this.editedcontent = this.posts.content
             this.date = this.posts.date
         }*/
-    },
+    }
+    /*,
     created() {
         db.collection('posts').get().then(snapshot => {
             snapshot.docs.forEach(doc => {
                 this.posts.push(doc.data())
             })
         })
-    }
-    
-    /*
-    created: function() {
-        this.fetchItems();
     }*/
 }
 </script>

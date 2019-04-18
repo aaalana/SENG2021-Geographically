@@ -5,6 +5,10 @@
                 <span>You have successfully published your blog post.</span>
                 <v-btn flat color="white" @click="snackbar = false">Close</v-btn>
             </v-snackbar>
+            <v-snackbar v-model="snackbar2" :timeout="4000" top color="info">
+                <span>You have successfully updated your blog post.</span>
+                <v-btn flat color="white" @click="snackbar2 = false">Close</v-btn>
+            </v-snackbar>
         </nav>
         <v-content>
             <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
@@ -27,7 +31,7 @@
                         </v-flex>
                         <v-flex>
                             <v-card-actions>
-                                <v-flex xs4 sm1 md4><EditPost :post="post"/></v-flex>
+                                <v-flex xs4 sm1 md4><EditPost :post="post" @blogPostUpdated="snackbar2 = true" @updateFrontEnd="updatePost(post)" /></v-flex>
                                 <v-flex xs4 sm1 md4><v-btn @click="deletePost(post)" flat fab><v-icon>delete</v-icon></v-btn></v-flex>
                             </v-card-actions>
                         </v-flex>
@@ -66,6 +70,7 @@ export default {
         return {
             posts: [],
             snackbar: false,
+            snackbar2: false
         }
     },
     methods: {
@@ -86,20 +91,31 @@ export default {
                 }
             }
             this.posts.splice(index, 1)
+        },
+        updatePost(post) {
+            // delete the post after the data has been pushed into the posts array via created()
+            let index
+            for (let i = 0; i < this.posts.length; i++) {
+                if (post.id === this.posts[i].id) {
+                    index = i
+                    break
+                }
+            }
+            this.posts.splice(index, 1)
         }
     },
     created() {
         db.collection('posts').onSnapshot(response => {
             const changes = response.docChanges();
-            // loop through changes made in the firestore database
+            // loop through changes made in the firestore database and update them
             changes.forEach(change => {
-                if  (change.type === 'added') {
+                if  (change.type === 'added' || change.type === 'modified') {
                     // push to the posts array 
                     this.posts.push({
                         ...change.doc.data(),
                         id: change.doc.id
                     })
-                } 
+                }
             })
         })
     }
