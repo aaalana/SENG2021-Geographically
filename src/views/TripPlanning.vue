@@ -57,6 +57,7 @@
       </v-layout>
       </v-container>
     </div>
+    <Footer />
   </v-app>
 </template>
 
@@ -66,7 +67,8 @@
   import selectDate from '@/components/selectDate.vue'
   import selectTime from '@/components/selectTime.vue'
   import randomMap from '@/components/randomMap.vue'
-  
+  import Footer from '@/components/Footer.vue'
+
   export default {
     name: 'App',
     components: {
@@ -74,7 +76,8 @@
       timeline,
       selectDate,
       selectTime,
-      randomMap
+      randomMap,
+      Footer
     }
 }
 </script>

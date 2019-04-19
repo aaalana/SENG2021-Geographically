@@ -51,6 +51,11 @@ export default new Router({
       name: 'playlists',
       component: () => import('./views/Playlists.vue')
     },
+    {
+      path: '/FAQs',
+      name: 'FAQs',
+      component: () => import('./views/FAQ.vue')
+    },
     // 404 page not found
     {
       path: '*',

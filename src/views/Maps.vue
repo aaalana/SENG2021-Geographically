@@ -36,17 +36,20 @@
       </div>
     </div>
     <Menu />
+    <Footer />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import Menu from '@/components/Menu.vue'
+import Footer from '@/components/Footer.vue'
 
 export default {
   name: 'map',
   components: {
-    Menu
+    Menu,
+    Footer
   }
 }
 </script>

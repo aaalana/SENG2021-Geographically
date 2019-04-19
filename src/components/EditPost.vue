@@ -101,6 +101,11 @@ export default {
             this.editedTitle = this.post.title,
             this.editedContent = this.post.content
         }
+    },
+    watch: {
+        dialog() {
+            this.reset();
+        }
     }
 }
 </script>

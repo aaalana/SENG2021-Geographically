@@ -68,11 +68,14 @@
         </v-layout>
       </v-container>
     </div> 
+    <Footer />
   </v-app>   
 </template>
 
 <script>
   import sidebar from '@/components/sidebar.vue'
+  import Footer from '@/components/Footer.vue'
+
   export default {
     name: 'App',
     return() {
@@ -81,7 +84,8 @@
       }
     },
     components: {
-      sidebar
+      sidebar,
+      Footer
     }
 }
 </script>

@@ -3,10 +3,8 @@
       <NavBar />
       <v-layout row wrap align-center>
         <v-flex class="text-xs-center">
-          <div class="font-weight-bold display-2" style="color:#424242">Contact Us</div><br>
-          <p class="title" style="color:#424242">Phone number: 0405 455 888</p>
-          <p class="title" style="color:#424242">Email: TeamA@gmail.com</p>
-          <p class="title" style="color:#424242">-Team A</p>
+          <div class="font-weight-bold display-2" style="color:#424242">FAQs</div><br>
+          <p class="title" style="color:#424242">No questions have been asked so far.</p>
         </v-flex>
       </v-layout>
       <Footer />

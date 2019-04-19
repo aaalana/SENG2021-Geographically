@@ -48,8 +48,10 @@
                     </v-layout>
                 </v-card>
             </v-container>
+            <br><br><br>
         </v-content>
         <Menu />
+        <Footer />
     </div>
 </template>
 
@@ -59,12 +61,15 @@ import Menu from '@/components/Menu.vue'
 import AddPost from '@/components/AddPost.vue'
 import EditPost from '@/components/EditPost.vue'
 import db from '@/fb'
+import Footer from '@/components/Footer.vue'
+
 export default {
     name: 'blog',
     components: {
         Menu,
         AddPost,
-        EditPost
+        EditPost,
+        Footer
     },
     data() {
         return {

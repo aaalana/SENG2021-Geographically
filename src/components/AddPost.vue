@@ -84,16 +84,24 @@ export default {
                 })
                 // stop loading and close the window
                 this.loading = false;
-                this.dialog = false;
                 this.reset();
                 // alert snackbox to show user that the blog post was published
                 this.$emit('blogPostAdded');
             }
         },
-        // reset the text field 
+        // reset the text fields
         reset() {
             this.dialog = false; 
-            this.$refs.form.reset() 
+            //this.$refs.form.reset(this.title, this.content) resets everything
+            this.title = '';
+            this.content = '';
+            this.$refs.form.resetValidation();
+        }
+    },
+    // if the dialog is closed without clicking cancel, reset the text fields
+    watch: {
+        dialog() {
+            this.reset();
         }
     }
 }
