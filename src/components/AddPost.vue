@@ -1,5 +1,5 @@
 <template>
-    <v-dialog max width="100%" v-model="dialog">
+    <v-dialog persistent no-click-animation max width="100%" v-model="dialog">
         <v-btn round style="border-radius:7px;" slot="activator" class="info">Add new post</v-btn>
             <v-layout row wrap>
             <v-card width="50%" class="px-5">
@@ -21,21 +21,21 @@
                         <v-btn flat round style="border-radius:7px;" class="info mx-0 mt-3" @click="reset">Cancel</v-btn>
                     </v-form>
                 </v-card-text>
-            </v-card>
-             <v-card max width="50%" class="px-5" d-block>
-                <v-card-title primary-title>
-                    <h2>Preview</h2>
-                </v-card-title>
-                <v-card-text>
-                    <h2 style="word-wrap: break-word;">{{ title }}</h2>
-                    <v-layout row justify-start align-start>
-                        <v-flex pr-4 xs6 md6 class="caption grey--text" style="word-wrap: break-word;">Written by {{ user }}</v-flex>
-                        <v-flex xs6 md6 class="caption grey--text" style="word-wrap: break-word;">Published on {{ date }}</v-flex>
-                    </v-layout>
-                    <br>
-                    <div style="word-wrap: break-word;">{{ content }}</div>
-                </v-card-text>
-            </v-card>
+                </v-card>
+                <v-card max width="50%" class="px-5">
+                    <v-card-title primary-title>
+                        <h2>Preview</h2>
+                    </v-card-title>
+                    <v-card-text>
+                        <h2 style="word-wrap: break-word;">{{ title }}</h2>
+                        <v-layout row justify-start align-start>
+                            <v-flex pr-4 xs6 md6 class="caption grey--text" style="word-wrap: break-word;">Written by {{ user }}</v-flex>
+                            <v-flex xs6 md6 class="caption grey--text" style="word-wrap: break-word;">Modified on {{ date }}</v-flex>
+                        </v-layout>
+                        <br>
+                        <div style="word-wrap: break-word;">{{ content }}</div>
+                    </v-card-text>
+                </v-card>
             </v-layout>
     </v-dialog>
 </template>
@@ -89,20 +89,14 @@ export default {
                 this.$emit('blogPostAdded');
             }
         },
-        // reset the text fields
+        // reset the text field 
         reset() {
             this.dialog = false; 
             //this.$refs.form.reset(this.title, this.content) resets everything
             this.title = '';
             this.content = '';
             this.$refs.form.resetValidation();
-        }
-    },
-    // if the dialog is closed without clicking cancel, reset the text fields
-    watch: {
-        dialog() {
-            this.reset();
-        }
+        },
     }
 }
 </script>

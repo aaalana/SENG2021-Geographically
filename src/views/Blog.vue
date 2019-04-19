@@ -9,6 +9,10 @@
                 <span>You have successfully updated your blog post.</span>
                 <v-btn flat color="white" @click="snackbar2 = false">Close</v-btn>
             </v-snackbar>
+            <v-snackbar v-model="snackbar3" :timeout="4000" top color="info">
+                <span>There has been no changes made to save to your blog post.</span>
+                <v-btn flat color="white" @click="snackbar3 = false">Close</v-btn>
+            </v-snackbar>
         </nav>
         <v-content>
             <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
@@ -21,8 +25,15 @@
                 </h1>
                 <AddPost @blogPostAdded="snackbar = true" />
             </v-flex>
-            <div v-if="posts.length === 0"><h3 class= "font-weight-regular">You have no blog posts.</h3></div>
-            <v-container v-else class="my-5">
+
+            <v-layout row wrap v-if="databaseNotEmpty === false && stopLoading === false">
+                <v-flex xs12 class="text-xs-center">
+                    <v-progress-circular indeterminate :size="70" :width="7" color="info"></v-progress-circular>
+                </v-flex>
+            </v-layout>
+
+            <v-container class="my-5">
+                <div v-if="empty === true"><h3 class= "font-weight-regular">You have no blog posts.</h3></div>
                 <v-card v-for="post in posts" :key="post.id">
                     <v-layout row wrap :class="'pa-3 post ${post.status}'"> 
                         <v-flex xs6 md4>
@@ -31,8 +42,12 @@
                         </v-flex>
                         <v-flex>
                             <v-card-actions>
-                                <v-flex xs4 sm1 md4><EditPost :post="post" @blogPostUpdated="snackbar2 = true" @updateFrontEnd="updatePost(post)" /></v-flex>
-                                <v-flex xs4 sm1 md4><v-btn @click="deletePost(post)" flat fab><v-icon>delete</v-icon></v-btn></v-flex>
+                                <v-flex xs4 sm1 md4>
+                                    <EditPost :post="post" @blogPostNotUpdated="snackbar3 = true" @blogPostUpdated="snackbar2 = true" @updateFrontEnd="updatePost(post)" />
+                                </v-flex>
+                                <v-flex xs4 sm1 md4>
+                                    <v-btn @click="deletePost(post)" flat fab><v-icon>delete</v-icon></v-btn>
+                                </v-flex>
                             </v-card-actions>
                         </v-flex>
 
@@ -42,7 +57,7 @@
 
                         <v-flex>
                             <v-card-actions class="text-xs-center">
-                                <v-btn round style="border-radius:7px; width:250px; height:50px;" color="info" class="font-weight-regular subheading" dark>VIEW BLOG POST</v-btn>
+                                <router-link :to ="/blog/ + post.id"><v-btn round style="border-radius:7px; width:250px; height:50px;" color="info" class="font-weight-regular subheading" dark>VIEW BLOG POST</v-btn></router-link>
                             </v-card-actions>
                         </v-flex>
                     </v-layout>
@@ -74,8 +89,12 @@ export default {
     data() {
         return {
             posts: [],
-            snackbar: false,
-            snackbar2: false
+            snackbar: false, // make blogpost
+            snackbar2: false, // update blogpost
+            snackbar3: false, // cannot update blogpost
+            databaseNotEmpty: false, // controls if the loading sign will start
+            stopLoading: false,
+            empty: false // check if there are any blog posts
         }
     },
     methods: {
@@ -96,6 +115,10 @@ export default {
                 }
             }
             this.posts.splice(index, 1)
+
+            if (this.posts.length === 0) {
+                this.empty = true;
+            }
         },
         updatePost(post) {
             // delete the post after the data has been pushed into the posts array via created()
@@ -116,13 +139,20 @@ export default {
             changes.forEach(change => {
                 if  (change.type === 'added' || change.type === 'modified') {
                     // push to the posts array 
+                    this.databaseNotEmpty = true,
+                    this.empty = false,
                     this.posts.push({
                         ...change.doc.data(),
-                        id: change.doc.id
+                        id: change.doc.id,
                     })
                 }
             })
+            if (this.databaseNotEmpty === false) {
+                this.stopLoading = true;
+                this.empty = true; 
+            }
         })
+        
     }
 }
 </script>
