@@ -2,7 +2,7 @@
     <iframe
         id="gmap_canvas"
         width="100%"
-        height="200%"
+        height="100%"
         :src="this.url"
         frameborder="0"
         scrolling="yes"
@@ -20,7 +20,7 @@ export default {
                 origin: "",
                 dest: "",
             },
-            result: 'hi'
+            result: 'Sydney'
         };
     }, 
     methods: { 

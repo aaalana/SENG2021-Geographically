@@ -65,10 +65,6 @@ export default {
     methods: {
         publish() {
             if(this.$refs.form.validate()) {
-<<<<<<< HEAD
-                this.loading = true; //use this when we actually put it in the database to show a loading sign
-                //console.log(this.title, this.content)
-=======
                 //use this when we actually put it in the database to show a loading sign
                 this.loading = true; 
                 
@@ -87,7 +83,6 @@ export default {
                     console.log(error);
                 })
                 // stop loading and close the window
->>>>>>> frontBackConnect
                 this.loading = false;
                 this.reset();
                 // alert snackbox to show user that the blog post was published

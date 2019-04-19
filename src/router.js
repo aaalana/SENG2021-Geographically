@@ -47,15 +47,12 @@ export default new Router({
       name: 'myProfile',
       component: () => import('./views/MyProfile.vue')
     },
-<<<<<<< HEAD
     //test route for backend
     {
       path: '/Ping',
       name: 'Ping',
       component: Ping,
     },
-    // 404 page not found 
-=======
     {
       path: '/playlists',
       name: 'playlists',
@@ -67,7 +64,6 @@ export default new Router({
       component: () => import('./views/FAQ.vue')
     },
     // 404 page not found
->>>>>>> frontBackConnect
     {
       path: '*',
       name: 'NotFound',

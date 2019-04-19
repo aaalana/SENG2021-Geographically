@@ -13,7 +13,7 @@
                     <v-text-field
                         style="font-family:Quicksand; font-size:15px;"
                         solo
-                        label="Search"
+                        label="Home"
                         prepend-inner-icon="place"
                         v-model="location.origin"
                     ></v-text-field>

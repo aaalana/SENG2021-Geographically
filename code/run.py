@@ -4,11 +4,8 @@ from flask_restful import reqparse, abort, Api, Resource
 from flask_cors import CORS
 from resources.Places import *
 from resources.Routing import *
-<<<<<<< HEAD
 from resources.parse import *
-=======
 from pymongo import MongoClient
->>>>>>> frontBackConnect
 
 ### Import resources
 from resources.users import Users
