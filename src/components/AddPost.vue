@@ -27,10 +27,10 @@
                     <h2>Preview</h2>
                 </v-card-title>
                 <v-card-text>
-                    <h2>{{ title }}</h2>
+                    <h2 style="word-wrap: break-word;">{{ title }}</h2>
                     <v-layout row justify-start align-start>
-                        <v-flex class="caption grey--text">Written by {{ user }}</v-flex>
-                        <v-flex class="caption grey--text">Published on {{ date }}</v-flex>
+                        <v-flex pr-4 xs6 md6 class="caption grey--text" style="word-wrap: break-word;">Written by {{ user }}</v-flex>
+                        <v-flex xs6 md6 class="caption grey--text" style="word-wrap: break-word;">Published on {{ date }}</v-flex>
                     </v-layout>
                     <br>
                     <div style="word-wrap: break-word;">{{ content }}</div>
