@@ -123,12 +123,12 @@ export default {
 </script>
 
 <style>
-.blog.published {
+.post.published {
     border-left: 4px solid #3cd1c2;
 
 }
 
-.blog.draft {
+.post.draft {
     border-left: 4px solid orange;
 }
 </style>

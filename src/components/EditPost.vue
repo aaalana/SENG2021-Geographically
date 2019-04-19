@@ -1,15 +1,15 @@
 <template>
-    <v-dialog max width="1450px" v-model="dialog">
+    <v-dialog max width="100%" v-model="dialog">
         <v-btn flat fab slot="activator"><v-icon>edit</v-icon></v-btn>
             <v-layout row wrap>
-            <v-card min width="725px" class="px-5">
+            <v-card max width="50%" class="px-5">
                 <v-card-title>
                     <h2>Edit Blog Post</h2>
                 </v-card-title>
                 <v-card-text>
                     <v-form ref="form">
                         <v-text-field label="Title" v-model="editedTitle" prepend-icon="folder" :rules="inputRules"></v-text-field>
-                        <v-textarea label="Information" v-model="editedContent" prepend-icon="edit" :rules="inputRules"></v-textarea>
+                        <v-textarea label="Tell us about your trip" v-model="editedContent" prepend-icon="edit" :rules="inputRules"></v-textarea>
 
                         <v-menu>
                             <v-text-field disabled :value="date" slot="activator" label="Date" prepend-icon="date_range"></v-text-field>
@@ -19,11 +19,11 @@
                         <v-spacer></v-spacer>
 
                         <v-btn flat class="info mx-3 mt-3" @click="publish" :loading="loading">Save and Publish</v-btn>
-                        <v-btn flat round style="border-radius:7px;" class="info mx-0 mt-3" @click="dialog = false">Cancel</v-btn>
+                        <v-btn flat round style="border-radius:7px;" class="info mx-0 mt-3"  @click="reset">Cancel</v-btn>
                     </v-form>
                 </v-card-text>
             </v-card>
-             <v-card min width="725px" class="px-5">
+             <v-card max width="50%" class="px-5">
                 <v-card-title>
                     <h2>Preview</h2>
                 </v-card-title>
@@ -34,7 +34,7 @@
                         <v-flex class="caption grey--text">Published on {{ date }}</v-flex>
                     </v-layout>
                     <br>
-                    <p>{{ editedContent }}</p>
+                    <div style="word-wrap: break-word;">{{ editedContent }}</div>
                 </v-card-text>
             </v-card>
             </v-layout>
@@ -51,7 +51,7 @@ export default {
             // load the data from the post array via props
             editedTitle: this.post.title,
             editedContent: this.post.content,
-            date: new Date().toISOString().substr(0, 10),
+            date: new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('T')[0],
             inputRules: [
                 v => v.trim() !== '' || 'You cannot leave this empty'
             ],
@@ -74,11 +74,11 @@ export default {
                 const update = {}
                 if (this.editedTitle) {
                     update.title = this.editedTitle
-                    update.date  = this.date
+                    update.date  = new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('T')[0]
                 }
                 if (this.editedContent) {
                     update.content = this.editedContent
-                    update.date  = this.date
+                    update.date  = new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('T')[0]
                 }
 
                 // delete post from the database
@@ -94,21 +94,13 @@ export default {
                 this.$emit('blogPostUpdated')
                 this.$emit('updateFrontEnd')
             }
+        },
+        // reset editing stage 
+        reset() {
+            this.dialog = false; 
+            this.editedTitle = this.post.title,
+            this.editedContent = this.post.content
         }
-        /*
-        cancel() {
-            this.editedtitle = this.posts.title
-            this.editedcontent = this.posts.content
-            this.date = this.posts.date
-        }*/
     }
-    /*,
-    created() {
-        db.collection('posts').get().then(snapshot => {
-            snapshot.docs.forEach(doc => {
-                this.posts.push(doc.data())
-            })
-        })
-    }*/
 }
 </script>
