@@ -2,7 +2,7 @@
   <nav>
     <v-toolbar app right dark>
       <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
-      <img alt="logo" src="../assets/mapLogo.png" height=30px>
+      <a href="/"><img alt="logo" src="../assets/mapLogo.png" height=30px></a>
       <v-toolbar-title class="headline text">
         <span style= "font-family:Quicksand" class="font-weight-regular">Geographically</span>
       </v-toolbar-title>

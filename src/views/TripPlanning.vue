@@ -65,6 +65,7 @@
       </v-layout>
       </v-container>
     </div>
+    <Footer />
   </v-app>
 </template>
 
@@ -75,7 +76,8 @@
   import selectTime from '@/components/selectTime.vue'
   import randomMap from '@/components/randomMap.vue'
   import axios from 'axios';
-  
+  import Footer from '@/components/Footer.vue'
+
   export default {
     name: 'App',
     components: {
@@ -83,7 +85,8 @@
       timeline,
       selectDate,
       selectTime,
-      randomMap
+      randomMap,
+      Footer
     },
     data() {
       return {

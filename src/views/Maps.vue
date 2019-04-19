@@ -1,6 +1,27 @@
 <template>
   <div>
     <div class="mapouter">
+      <v-card>
+      <v-content>
+      <v-layout row wrap>
+        <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
+        <v-flex>
+          <br><v-card-title class="display-1" style="font-family: Quicksand">Map Mode</v-card-title>
+        </v-flex>
+        <v-spacer></v-spacer>
+        <v-flex mt-4 mr-4>
+          <v-form>
+            <v-text-field
+             style="font-family:Quicksand; font-size:15px;"
+             solo
+             label="Search a location"
+             prepend-inner-icon="place"
+             ></v-text-field>
+          </v-form>
+        </v-flex>
+      </v-layout>
+      </v-content>
+      </v-card>
       <div class="gmap_canvas">
         <iframe
           id="gmap_canvas"
@@ -15,17 +36,20 @@
       </div>
     </div>
     <Menu />
+    <Footer />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import Menu from '@/components/Menu.vue'
+import Footer from '@/components/Footer.vue'
 
 export default {
   name: 'map',
   components: {
-    Menu
+    Menu,
+    Footer
   }
 }
 </script>

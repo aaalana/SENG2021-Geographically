@@ -1,7 +1,7 @@
 <template>
   <div class="dasboard">
     <v-container class="dblayout">
-
+    <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
       <v-layout row>
         <v-flex xs12>
           <h1 style="font-family:Quicksand;padding:30px;font-size:30px">Map Mode</h1>

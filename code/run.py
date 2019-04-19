@@ -1,10 +1,24 @@
+### Import dependancies/libraries
 from flask import Flask, render_template
 from flask_restful import reqparse, abort, Api, Resource
 from flask_cors import CORS
 from resources.Places import *
 from resources.Routing import *
+<<<<<<< HEAD
 from resources.parse import *
+=======
+from pymongo import MongoClient
+>>>>>>> frontBackConnect
 
+### Import resources
+from resources.users import Users
+
+### Set up/connect to the Mongo Database
+client = MongoClient("mongodb://localhost:27017/")
+db = client.geographicallyDB
+users = db.users
+
+### Set 'flask' environment settings
 app = Flask(__name__)
 api = Api(app)
 app.config.from_object(__name__)
@@ -96,5 +110,9 @@ def sendInfo():
     return jsonify(details)
 
 
+### Add the Flask_RESTful resources here
+api.add_resource(Users, '/Users')
+
+### Start the server, (called through 'serverStart' script)
 if __name__ == '__main__':
     app.run()

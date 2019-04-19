@@ -17,7 +17,6 @@
               <v-card-text style="font-family:Quicksand; font-size:15px;">
                 <h4 style="font-family:Quicksand; font-size:20px;">John Doe</h4>
                 <v-icon medium>place</v-icon>1 Main Street, Sydney 2000
-                
               </v-card-text>
             </v-card>
             <v-spacer></v-spacer>
@@ -69,15 +68,24 @@
         </v-layout>
       </v-container>
     </div> 
+    <Footer />
   </v-app>   
 </template>
 
 <script>
   import sidebar from '@/components/sidebar.vue'
+  import Footer from '@/components/Footer.vue'
+
   export default {
     name: 'App',
+    return() {
+      data: {
+        message: false
+      }
+    },
     components: {
-      sidebar
+      sidebar,
+      Footer
     }
 }
 </script>
