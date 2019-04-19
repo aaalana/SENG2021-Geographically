@@ -52,7 +52,11 @@ class LocSummary(Resource):
 
 class DestinationPhoto(Resource):
     def get(self):
-        return photo
+        location = route[0]['end']
+        print(location)
+        info = Places.getPlacesInfo(location)
+        print(info)
+        return Places.getPhoto(info)
 
 
 class Location(Resource):

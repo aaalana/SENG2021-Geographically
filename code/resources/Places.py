@@ -47,7 +47,7 @@ class Places(Resource):
         return lat, lng
 
     def getPhoto(location):
-        refID = location["photos"][0]["photo_reference"]
+        refID = location[0]["photos"][0]["photo_reference"]
         width = 400
         url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth={width}&photoreference={refID}&key={APIKEY}".format(width = width, refID = refID, APIKEY = APIKEY) 
         print(url)
@@ -55,9 +55,12 @@ class Places(Resource):
 
     def getPlacesInfo(locationstr):
         locationstr = locationstr.replace(' ','%20' )
-        
-        url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input={locationstr}&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key={APIKEY}"
+        url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query={locationstr}&key={APIKEY}".format(locationstr = locationstr, APIKEY = APIKEY)
         print(url)
+        response = requests.get(url)
+        res = json.loads(response.text)
+        return (res["results"])
+
     def getPhotoRecs(locations):
         
         lst = []
@@ -85,3 +88,5 @@ class Places(Resource):
     #print(location["photos"][0]["photo_reference"])
 #id = getPhotoId(findPointsOfInterest())
 #getPhotoLocation(id)
+#info = Places.getPlacesInfo("Darling Harbour")
+#Places.getPhoto(info)

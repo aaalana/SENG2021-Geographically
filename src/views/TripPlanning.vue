@@ -54,7 +54,10 @@
                 <br>
                 WEATHER AT ARRIVAL<br>
                 <!--11&#0176;C--><br>
-                MY TRIP PLAYLIST<br><v-divider></v-divider> {{summary}}
+                MY TRIP PLAYLIST<br><v-divider></v-divider> 
+                <img :src=photo class=”cropimg”>
+                <br>
+                {{summary}}
               </p>
             </v-flex>
           </v-layout>
@@ -86,6 +89,7 @@
       return {
         msg: [],
         summary:[],
+        photo: [],
       };
     },
     methods: {
@@ -110,11 +114,24 @@
             // eslint-disable-next-line
             console.error(error);
           });
+      },
+      getTripPhoto() {
+        const path = 'http://localhost:5000/trips/photo';
+        axios.get(path)
+          .then((res) => {
+            this.photo = res.data;
+            alert(this.photo)
+          })
+          .catch((error) => {
+            // eslint-disable-next-line
+            console.error(error);
+          });
       }
     },
       
       
       created() {
+        this.getTripPhoto();
         this.getTrip();
         this.getTripSummary();
         this.getLocation();
@@ -137,4 +154,10 @@
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;
   }
+  .cropimg {
+    width: 200px;
+    height: 150px;
+    overflow: hidden;
+
+}
 </style>
