@@ -12,46 +12,85 @@ app.config.from_object(__name__)
 # enable CORS
 CORS(app)
 
-
+route = [
+    {
+        'start': Places.getCurrentLocation(),
+        'end': "Canberra"
+    }
+]
 #we should get a json returning from the other functions and call it from here
-start = Places.getCurrentLocation()
-end = "Canberra"
+
 
 recommendations = Places.findPointsOfInterest()
-findRoute = Route.findRouteInfo(start, end)
 locationphotos = Places.getPhotoRecs(recommendations)
-summary = Summary.getPlaceSummary(end)
-#photo = 
-print(summary)
+
 print(locationphotos)
 locations = json.loads(locationphotos)
-print(findRoute)
+#print(findRoute)
 class Recommendations(Resource):
     def get(self):
         return locations
         
 class Routing(Resource):
     def get(self):
-        return findRoute        
+        print("dist")
+        print(route)
+        print(Places.getCurrentLocation())
+        if not route[0]['start']:
+            findRoute = Route.findRouteInfo(Places.getCurrentLocation(), route[0]['end'])
+        else:
+            findRoute = Route.findRouteInfo(route[0]['start'], route[0]['end'])
+        return jsonify(findRoute)        
     def put(self,start,end):
         findRoute = Route.findRouteInfo(start, end)
         return findRoute
 
-class Summary(Resource):
+class LocSummary(Resource):
     def get(self):
+        summary = Summary.getPlaceSummary(route[0]['end'])
         return summary
 
 class DestinationPhoto(Resource):
     def get(self):
         return photo
 
+
+class Location(Resource):
+    def get(self):
+        print('hi')
+        print(route)
+        return jsonify({
+        'status': 'success',
+        'location': route
+        })
+    def post(self):
+        location = {'start':'help', 'dest' : 'end'}
+        location = request.get_json()
+        route[0]['start'] = location['start']
+        route[0]['end'] = location['end']
+        summary = Summary.getPlaceSummary(location["end"])
+        print(summary)
+        return location
+
 api.add_resource(Recommendations, '/recommendation')
 api.add_resource(Routing, '/trips')
-api.add_resource(Summary, '/trips/summary')
+api.add_resource(LocSummary, '/trips/summary')
 api.add_resource(DestinationPhoto, '/trips/photo')
+api.add_resource(Location, '/location')
 @app.route('/')
 def test_page():
     return Recommendations
+
+@app.route('/location')
+def sendInfo():
+    print("test")
+    details = request.get_json()
+    print(details["end"])
+    summary = Summary.getPlaceSummary("Canberra")
+    print(details)
+    print(summary)
+    return jsonify(details)
+
 
 if __name__ == '__main__':
     app.run()

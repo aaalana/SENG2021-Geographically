@@ -40,6 +40,8 @@ class Places(Resource):
     #get current location
     def getCurrentLocation():
         g = geocoder.ip('me')
+        print("location is")
+        print(g)
         lat = str(g.latlng[0])
         lng = str(g.latlng[1])
         return lat, lng
@@ -78,8 +80,8 @@ class Places(Resource):
 #print(getCurrentLocation())
 #findRestaurant(getCurrentLocation())
 #Places.findPointsOfInterest()
-locations = Places.findPointsOfInterest()
-Places.getPhotoRecs(locations)
+#locations = Places.findPointsOfInterest()
+#Places.getPhotoRecs(locations)
     #print(location["photos"][0]["photo_reference"])
 #id = getPhotoId(findPointsOfInterest())
 #getPhotoLocation(id)

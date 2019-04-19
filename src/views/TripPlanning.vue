@@ -45,7 +45,12 @@
             </v-flex>
             <v-flex d-flex xs8 sm8 md8 order-lg4>
               <p style="font-family:Quicksand; font-size:15px;">
-                LENGTH OF TRIP<br> {{msg["length"]}}
+                {{msg["start"]}} TO {{msg["end"]}}
+                <v-divider></v-divider> 
+                <br>
+                LENGTH OF TRIP<br> {{msg["dis"]}}
+                <br>
+                TRIP TIME<br> {{msg["time"]}}
                 <br>
                 WEATHER AT ARRIVAL<br>
                 <!--11&#0176;C--><br>
@@ -105,8 +110,6 @@
             // eslint-disable-next-line
             console.error(error);
           });
-      
-      
       }
     },
       
@@ -114,6 +117,7 @@
       created() {
         this.getTrip();
         this.getTripSummary();
+        this.getLocation();
       },
 }
 </script>

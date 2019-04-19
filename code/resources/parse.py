@@ -25,8 +25,5 @@ class Summary(Resource):
             print ("No information found")
             return "No information found"
 
-        print(DATA["extract"])
 
         return(DATA["extract"])
-
-Summary.getPlaceSummary("Chinese Garden of Friendship")
