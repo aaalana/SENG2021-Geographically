@@ -18,11 +18,11 @@
             </v-flex>
 
             <v-flex xs12>
-              <v-text-field v-model="email" :rules="inputRules" id="signup-email" label="Email*" required></v-text-field>
+              <v-text-field v-model="email" :rules="inputRules" label="Email*" required></v-text-field>
             </v-flex>
 
             <v-flex xs12>
-              <v-text-field v-model="password" :rules="inputRules" id="signup-password" label="Password*" type="password" required></v-text-field>
+              <v-text-field v-model="password" :rules="inputRules" label="Password*" type="password" required></v-text-field>
             </v-flex>
             <small>*indicates required field</small>
           </v-layout>
@@ -32,7 +32,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="blue darken-1" style="min-width:100px;min-height:50px;" flat @click="dialog=false">Close</v-btn>
-        <v-btn id="submit" color="blue darken-1" style="min-width:100px;min-height:50px;" flat @click="signUserUp">Submit</v-btn>
+        <v-btn color="blue darken-1" style="min-width:100px;min-height:50px;" flat @click="signUserUp">Submit</v-btn>
       </v-card-actions>
       </v-form>
       </v-card>
@@ -56,6 +56,7 @@ export default {
         inputRules: [
             v => v.trim() !== '' || 'You cannot leave this field empty'
         ],
+        success: false
       }
     },
     methods: {
@@ -68,7 +69,8 @@ export default {
               username: this.user,
               registeredBlogPosts: []
             }
-            alert('Account created for ' + this.user);
+            this.success = true;
+            alert('Account created for ' + this.email);
             this.$router.push('/dashboard');
             console.log("Sign up was successful!");
         
@@ -77,17 +79,17 @@ export default {
            // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
-            if (errorCode == 'auth/weak-password') {
+            if (errorCode === 'auth/weak-password') {
               alert('The password is too weak.');
-            } else if (errorCode == 'auth/email-already-in-use') {
+            } else if (errorCode === 'auth/email-already-in-use') {
               alert('The email is already in use')
-            } else if (errorCode == 'auth/invalid-email') {
+            } else if(errorCode === 'auth/invalid-email') {
               alert('Please use a valid email')
             } else {
               alert(errorMessage);
             }
             console.log(error);
-          })
+          });
           /*
           firebase.auth().currentUser.sendEmailVerification(actionCodeSettings)
           .then(function() {
@@ -97,7 +99,7 @@ export default {
             // Error occurred. Inspect error.code.
           });
           */
-          if (error.code === null) {
+          if (this.success === true) {
             this.dialog = false;
           }
       }
