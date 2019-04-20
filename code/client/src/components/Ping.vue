@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>{{ msg }}</p>
+    <p>{{ msg.name }}</p>
   </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     getMessage() {
-      const path = 'http://localhost:5000/recommendation';
+      const path = 'http://localhost:5000/';
       axios.get(path)
         .then((res) => {
           this.msg = res.data;

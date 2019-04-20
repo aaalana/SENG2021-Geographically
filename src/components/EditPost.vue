@@ -54,7 +54,7 @@ export default {
             editedContent: this.post.content,
             date: new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('T')[0],
             inputRules: [
-                v => v.trim() !== '' || 'You cannot leave this empty'
+                v => v.trim() !== '' || 'You cannot leave this field empty'
             ],
             loading: false, // controls when the loading sign appears on the button
             dialog: false, // closes the add post window/pop up

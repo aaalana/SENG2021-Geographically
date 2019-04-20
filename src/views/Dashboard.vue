@@ -1,6 +1,6 @@
 <template>
   <div class="dasboard">
-    <v-container class="dblayout">
+    <v-content class="dblayout">
     <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
       <v-layout row>
         <v-flex xs12>
@@ -33,23 +33,19 @@
         <v-flex xs12>
           <v-card>
           <h3 style="font-family:Quicksand;padding:30px;font-size:30px">Road Trip!</h3>
-          <template>
-            <v-carousel>
+            <v-carousel style="width:90%">
               <v-carousel-item
                 v-for="(item,i) in items"
                 :key="i"
-                :src="item.src"
+                :src="item['src']"
               ></v-carousel-item>
             </v-carousel>
           </template>
           </v-card>
         </v-flex>
       </v-layout>
-
-    </v-container>
-
-
-    <ContactUs />
+      <br><br>
+    </v-content>
     <Menu />
     <Footer />
   </div>
@@ -58,6 +54,7 @@
 <script>
 import Footer from '@/components/Footer.vue'
 import Menu from '@/components/Menu.vue'
+import axios from 'axios';
 
 export default {
   name: 'dashboard',
@@ -67,22 +64,42 @@ export default {
   },
   data () {
     return {
-      items: [
-        {
-          src: 'https://i.imgur.com/Udpl0Mu.jpg'
-        },
-        {
-          src: 'https://i.imgur.com/GAnTyFJ.jpg'
-        },
-        {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg'
-        },
-        {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg'
-        }
-      ]
+      items: [],
     }
-  }
+  },
+  methods: {
+    getMessage() {
+      const path = 'http://localhost:5000/recommendation';
+      axios.get(path)
+        .then((res) => {
+          this.items = res.data;
+        })
+        .catch((error) => {
+          // eslint-disable-next-line
+          console.error(error);
+        });
+    },
+    getTripPhoto() {
+        const path = 'http://localhost:5000/trips/photo';
+        axios.get(path)
+          .then((res) => {
+            this.photo = res.data;
+          })
+          .catch((error) => {
+            // eslint-disable-next-line
+            console.error(error);
+          });
+
+
+      }
+
+  },
+  created() {
+    this.getMessage();
+    this.getTripPhoto()
+  },
+
+
 }
 
 </script>

@@ -1,5 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
+import 'firebase/auth'
 
 // Initialize Firebase
 var config = {
@@ -10,8 +11,12 @@ var config = {
     storageBucket: "blogdatabase-39a1c.appspot.com",
     messagingSenderId: "789831703195"
 };
-firebase.initializeApp(config);
-const db = firebase.firestore();
 
-db.settings({ timestampsInSnapshots: true });
+firebase.initializeApp(config);
+
+const db = firebase.firestore();
+const auth = firebase.auth();
+
+
+//db.settings({ timestampsInSnapshots: true });
 export default db;

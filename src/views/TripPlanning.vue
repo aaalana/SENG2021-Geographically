@@ -1,4 +1,5 @@
 <template>
+  
   <v-app>
     <div>
       <v-container fluid>
@@ -31,7 +32,7 @@
                 </v-flex>
                 <v-flex xs1></v-flex>
                 <v-flex xs5>
-                  <selectTime />
+                  <selectTime @inputData="getTime" />
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -39,17 +40,27 @@
               <v-layout row wrap>
                 <v-flex xs7></v-flex>
                 <v-flex xs5 order-lg2>
-                  <v-btn flat><v-icon>save</v-icon>Save trip</v-btn>
+                  <v-btn flat @click="reloadPage()" ><v-icon>save</v-icon>Save trip</v-btn>
                 </v-flex>
               </v-layout>
             </v-flex>
             <v-flex d-flex xs8 sm8 md8 order-lg4>
               <p style="font-family:Quicksand; font-size:15px;">
-                LENGTH OF TRIP<br>
+                {{arrtime}}
+                <br>
+                {{msg["start"]}} TO {{msg["end"]}}
+                <v-divider></v-divider> 
+                <br>
+                LENGTH OF TRIP<br> {{msg["dis"]}}
+                <br>
+                TRIP TIME<br> {{msg["time"]}}
                 <br>
                 WEATHER AT ARRIVAL<br>
                 <!--11&#0176;C--><br>
-                MY TRIP PLAYLIST<br><v-divider></v-divider>
+                MY TRIP PLAYLIST<br><v-divider></v-divider> 
+                <img :src=photo class=”cropimg”>
+                <br>
+                {{summary}}
               </p>
             </v-flex>
           </v-layout>
@@ -67,7 +78,9 @@
   import selectDate from '@/components/selectDate.vue'
   import selectTime from '@/components/selectTime.vue'
   import randomMap from '@/components/randomMap.vue'
+  import axios from 'axios';
   import Footer from '@/components/Footer.vue'
+  //import VueGoogleAutocomplete from 'vue-google-autocomplete'
 
   export default {
     name: 'App',
@@ -77,8 +90,80 @@
       selectDate,
       selectTime,
       randomMap,
-      Footer
-    }
+      Footer,
+    },
+    data() {
+      return {
+        msg: [],
+        summary:[],
+        photo: [],
+        deptime: '',
+        arrtime: '',
+        address:'',
+      };
+    },
+
+     mounted() {
+            // To demonstrate functionality of exposed component functions
+            // Here we make focus on the user input
+            this.$refs.address.focus();
+        },
+    methods: {
+      getTrip() {
+        const path = 'http://localhost:5000/trips';
+        axios.get(path)
+          .then((res) => {
+            this.msg = res.data; 
+          })
+          .catch((error) => {
+            // eslint-disable-next-line
+            console.error(error);
+          });
+      },
+      getTripSummary() {
+        const path = 'http://localhost:5000/trips/summary';
+        axios.get(path)
+          .then((res) => {
+            this.summary = res.data;
+          })
+          .catch((error) => {
+            // eslint-disable-next-line
+            console.error(error);
+          });
+      },
+      getTripPhoto() {
+        const path = 'http://localhost:5000/trips/photo';
+        axios.get(path)
+          .then((res) => {
+            this.photo = res.data;
+          })
+          .catch((error) => {
+            // eslint-disable-next-line
+            console.error(error);
+          });
+      },
+      getTime(time) {
+        this.deptime = time
+        this.arrtime = time + this.msg["timesec"]
+        alert(this.msg["timesec"])
+      },
+      getAddressData: function (addressData) {
+                this.address = addressData;
+      },
+      reloadPage(){
+        window.location.reload()
+      },
+  },
+
+      
+      
+      created() {
+        this.getTripPhoto();
+        this.getTrip();
+        this.getTripSummary();
+        this.getLocation();
+      },
+
 }
 </script>
 
@@ -97,4 +182,10 @@
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;
   }
+  .cropimg {
+    width: 200px;
+    height: 150px;
+    overflow: hidden;
+
+}
 </style>

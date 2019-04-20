@@ -25,7 +25,8 @@
         >
             <v-spacer></v-spacer>
             <v-btn style="font-family:Quicksand; font-size:15px;" flat color="primary" @click="modal2 = false">Cancel</v-btn>
-            <v-btn style="font-family:Quicksand; font-size:15px;" flat color="primary" @click="$refs.dialog.save(time)">OK</v-btn>
+            <v-btn style="font-family:Quicksand; font-size:15px;" flat color="primary" @click="submit">OK</v-btn>
+            {{time}}
         </v-time-picker>
     </v-dialog>
 </template>
@@ -38,7 +39,15 @@ export default {
             menu2: false,
             modal2: false
         }
+    },
+    methods: {
+        submit: function() {
+        this.$refs.dialog.save(this.time)
+        this.$emit("inputData", this.time);
+        }
     }
-}
+
+
+};
 </script>
 

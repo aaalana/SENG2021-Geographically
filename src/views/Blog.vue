@@ -47,6 +47,10 @@
                             <v-icon left>date_range</v-icon>
                             <span class="text-lowercase">By most recent date</span>
                         </v-btn>
+                        <v-btn flat color="grey" @click="sortBy('date2')">
+                            <v-icon left>access_time</v-icon>
+                            <span class="text-lowercase">By oldest date</span>
+                        </v-btn>
                     </v-layout>
                 </v-container>
 
@@ -186,8 +190,10 @@ export default {
         sortBy(prop) {
             if (prop === 'title') {
                 this.posts.sort((a,b) => a[prop] < b[prop] ? -1 : 1);
-            } else {
+            } else if (prop === 'date') {
                 this.posts.sort((a,b) => a.date > b.date ? -1 : 1);
+            } else {
+                this.posts.sort((a,b) => a.date < b.date ? -1 : 1);
             }
         }
     },

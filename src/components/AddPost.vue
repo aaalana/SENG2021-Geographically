@@ -51,7 +51,7 @@ export default {
             //date: new Date().toDateString() - puts date in words
             date: new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('T')[0],
             inputRules: [
-                v => v.trim() !== '' || 'You cannot leave this empty'
+                v => v.trim() !== '' || 'You cannot leave this field empty'
             ],
             // controls when the loading sign appears on the button
             loading: false,
