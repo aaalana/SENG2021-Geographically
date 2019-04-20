@@ -1,4 +1,5 @@
 <template>
+  
   <v-app>
     <div>
       <v-container fluid>
@@ -31,7 +32,7 @@
                 </v-flex>
                 <v-flex xs1></v-flex>
                 <v-flex xs5>
-                  <selectTime />
+                  <selectTime @inputData="getTime" />
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -39,12 +40,14 @@
               <v-layout row wrap>
                 <v-flex xs7></v-flex>
                 <v-flex xs5 order-lg2>
-                  <v-btn flat><v-icon>save</v-icon>Save trip</v-btn>
+                  <v-btn flat @click="reloadPage()" ><v-icon>save</v-icon>Save trip</v-btn>
                 </v-flex>
               </v-layout>
             </v-flex>
             <v-flex d-flex xs8 sm8 md8 order-lg4>
               <p style="font-family:Quicksand; font-size:15px;">
+                {{arrtime}}
+                <br>
                 {{msg["start"]}} TO {{msg["end"]}}
                 <v-divider></v-divider> 
                 <br>
@@ -77,6 +80,7 @@
   import randomMap from '@/components/randomMap.vue'
   import axios from 'axios';
   import Footer from '@/components/Footer.vue'
+  //import VueGoogleAutocomplete from 'vue-google-autocomplete'
 
   export default {
     name: 'App',
@@ -86,21 +90,30 @@
       selectDate,
       selectTime,
       randomMap,
-      Footer
+      Footer,
     },
     data() {
       return {
         msg: [],
         summary:[],
         photo: [],
+        deptime: '',
+        arrtime: '',
+        address:'',
       };
     },
+
+     mounted() {
+            // To demonstrate functionality of exposed component functions
+            // Here we make focus on the user input
+            this.$refs.address.focus();
+        },
     methods: {
       getTrip() {
         const path = 'http://localhost:5000/trips';
         axios.get(path)
           .then((res) => {
-            this.msg = res.data;
+            this.msg = res.data; 
           })
           .catch((error) => {
             // eslint-disable-next-line
@@ -123,14 +136,25 @@
         axios.get(path)
           .then((res) => {
             this.photo = res.data;
-            alert(this.photo)
           })
           .catch((error) => {
             // eslint-disable-next-line
             console.error(error);
           });
-      }
-    },
+      },
+      getTime(time) {
+        this.deptime = time
+        this.arrtime = time + this.msg["timesec"]
+        alert(this.msg["timesec"])
+      },
+      getAddressData: function (addressData) {
+                this.address = addressData;
+      },
+      reloadPage(){
+        window.location.reload()
+      },
+  },
+
       
       
       created() {
@@ -139,6 +163,7 @@
         this.getTripSummary();
         this.getLocation();
       },
+
 }
 </script>
 

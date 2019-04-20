@@ -16,22 +16,22 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            location: {
-                origin: "",
-                dest: "",
-            },
-            result: 'Sydney'
+            origin: "",
+            dest: "",
+            result: 'Sydney',
+            url: '' 
         };
     }, 
     methods: { 
     getURL: function() {
-        const path = 'http://localhost:5000/location';
+        const path = 'http://localhost:5000/trips';
         axios.get(path)
             .then((res) => {
-                this.result = res.data.location[0]["end"];
-                return this.result
+                this.origin = res.data["start"].split(' ').join('+');
+                this.dest = res.data["end"].split(' ').join('+');
+                this.url = "https://www.google.com/maps/embed/v1/directions?key=AIzaSyAFkE9C-jZGN-bocvETUHsJFm-F0cEhrVE&origin="+this.origin+"&destination="+this.dest
+                //this.url ="https://maps.google.com/maps?q=" +this.result+"&t=&z=13&ie=UTF8&iwloc=&output=embed" 
             });
-        this.url ="https://maps.google.com/maps?q=" +this.result+"&t=&z=13&ie=UTF8&iwloc=&output=embed" 
     },
 },
   created() {

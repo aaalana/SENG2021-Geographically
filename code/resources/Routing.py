@@ -21,7 +21,7 @@ class Route(Resource):
         #return res
         #print(res["routes"]["legs"]["start_address"])
             #print(routes["legs"]["start_address"] + routes["legs"]["end_address"] + routes["legs"]["distance"]["text"])
-        data = {"start": res["routes"][0]["legs"][0]["start_address"], "end": res["routes"][0]["legs"][0]["end_address"],"dis": res["routes"][0]["legs"][0]["distance"]["text"], "time": res["routes"][0]["legs"][0]["duration"]["text"]}
+        data = {"start": res["routes"][0]["legs"][0]["start_address"], "end": res["routes"][0]["legs"][0]["end_address"],"dis": res["routes"][0]["legs"][0]["distance"]["text"], "time": res["routes"][0]["legs"][0]["duration"]["text"], "timesec": res["routes"][0]["legs"][0]["duration"]["value"]}
         return data
 
 #Route.findRouteInfo("Bridgewater, Sa, Australia", "Stirling, SA, Australia")
