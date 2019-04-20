@@ -16,9 +16,9 @@
           <p style="font-size:20px;padding:5px">Royal Botanical Gardens</p>
           <img id = "yeet" src="../assets/royalbg.png" style="padding:5px" height="232px" width="309px">
           <p style="font-size:20px;padding:5px">Anzac Memorial</p>
-          <img id = "yeet" src="../assets/anzac.png" style="padding:5px" height="232px" width="309px">
+          <img id = "yeet" src= "../assets/anzac.png" style="padding:5px" height="232px" width="309px">
         </v-flex>
-      </v-layout>
+      </v-layout> 
 
       <v-layout row align-content-center mb-5>
         <v-flex xs12>
@@ -27,7 +27,7 @@
               <v-carousel-item
                 v-for="(item,i) in items"
                 :key="i"
-                :src="item.src"
+                :src="item['src']"
               ></v-carousel-item>
             </v-carousel>
         </v-flex>
@@ -43,6 +43,7 @@
 <script>
 import Footer from '@/components/Footer.vue'
 import Menu from '@/components/Menu.vue'
+import axios from 'axios';
 
 export default {
   name: 'dashboard',
@@ -52,22 +53,42 @@ export default {
   },
   data () {
     return {
-      items: [
-        {
-          src: 'https://i.imgur.com/Udpl0Mu.jpg'
-        },
-        {
-          src: 'https://i.imgur.com/GAnTyFJ.jpg'
-        },
-        {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg'
-        },
-        {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg'
-        }
-      ]
+      items: [],
     }
-  }
+  },
+  methods: {
+    getMessage() {
+      const path = 'http://localhost:5000/recommendation';
+      axios.get(path)
+        .then((res) => {
+          this.items = res.data;
+        })
+        .catch((error) => {
+          // eslint-disable-next-line
+          console.error(error);
+        });
+    },
+    getTripPhoto() {
+        const path = 'http://localhost:5000/trips/photo';
+        axios.get(path)
+          .then((res) => {
+            this.photo = res.data;
+          })
+          .catch((error) => {
+            // eslint-disable-next-line
+            console.error(error);
+          });
+      
+      
+      }
+    
+  },
+  created() {
+    this.getMessage();
+    this.getTripPhoto()
+  },
+
+
 }
 
 </script>

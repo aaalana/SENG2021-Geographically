@@ -8,7 +8,11 @@ class Route(Resource):
     def findRouteInfo(start, end):
         #start = "Bridgewater, Sa, Australia"
         #finish = "Stirling, SA, Australia"
-
+        print(start)
+        if isinstance(start, tuple):
+            start = str(start[0]+','+start[1]) 
+        print(start)
+        print(end)
         url = "https://maps.googleapis.com/maps/api/directions/json?origin={start}&destination={end}&key={APIKEY}".format(start = start, end = end, APIKEY=APIKEY)
         response = requests.get(url)
         res = json.loads(response.text)
@@ -17,7 +21,7 @@ class Route(Resource):
         #return res
         #print(res["routes"]["legs"]["start_address"])
             #print(routes["legs"]["start_address"] + routes["legs"]["end_address"] + routes["legs"]["distance"]["text"])
-        data = {"start": res["routes"][0]["legs"][0]["start_address"], "end": res["routes"][0]["legs"][0]["end_address"],"length": res["routes"][0]["legs"][0]["distance"]["text"], "time": res["routes"][0]["legs"][0]["duration"]["text"]}
-        return json.dumps(data)
+        data = {"start": res["routes"][0]["legs"][0]["start_address"], "end": res["routes"][0]["legs"][0]["end_address"],"dis": res["routes"][0]["legs"][0]["distance"]["text"], "time": res["routes"][0]["legs"][0]["duration"]["text"], "timesec": res["routes"][0]["legs"][0]["duration"]["value"]}
+        return data
 
-#findRoute("Bridgewater, Sa, Australia", "Stirling, SA, Australia")
+#Route.findRouteInfo("Bridgewater, Sa, Australia", "Stirling, SA, Australia")
