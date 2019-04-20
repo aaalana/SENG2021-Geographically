@@ -29,7 +29,7 @@ export default {
             // forEach = looping through docs
             this.post = doc.data();
             console.log(doc.data())
-        })
+        });
     }
 }
 </script>
