@@ -1,5 +1,5 @@
 <template>
-    <v-dialog max width="100%" v-model="dialog">
+    <v-dialog persistent no-click-animation max width="100%" v-model="dialog">
         <v-btn flat fab slot="activator"><v-icon>edit</v-icon></v-btn>
             <v-layout row wrap>
             <v-card max width="50%" class="px-5">
@@ -13,7 +13,6 @@
 
                         <v-menu>
                             <v-text-field disabled :value="date" slot="activator" label="Date" prepend-icon="date_range"></v-text-field>
-                            <!--<v-date-picker v-model="date"></v-date-picker>-->
                         </v-menu>
                         
                         <v-spacer></v-spacer>
@@ -28,10 +27,11 @@
                     <h2>Preview</h2>
                 </v-card-title>
                 <v-card-text>
-                    <h2 style="word-wrap: break-word;">{{ editedTitle }}</h2>
+                    <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
+                    <h2 style="font-family:Quicksand; word-wrap: break-word;">{{ editedTitle }}</h2>
                     <v-layout row justify-start align-start>
                         <v-flex pr-4 xs6 md6 class="caption grey--text" style="word-wrap: break-word;">Written by {{ user }}</v-flex>
-                        <v-flex xs6 md6 class="caption grey--text" style="word-wrap: break-word;">Published on {{ date }}</v-flex>
+                        <v-flex xs6 md6 class="caption grey--text" style="word-wrap: break-word;">Modified on {{ date }}</v-flex>
                     </v-layout>
                     <br>
                     <div style="word-wrap: break-word;">{{ editedContent }}</div>
@@ -45,6 +45,7 @@
 //import axios from 'axios'
 import db from '@/fb'
 export default {
+    // used to retrieve data found on blog.vue via :post
     props: ['post'],
     data() {
         return {
@@ -55,28 +56,25 @@ export default {
             inputRules: [
                 v => v.trim() !== '' || 'You cannot leave this empty'
             ],
-            // controls when the loading sign appears on the button
-            loading: false,
-            // closes the add post window/pop up
-            dialog: false,
-            // array of blog posts
-            postId: this.post.id,
-            // hard-coded user - change later
-            user: 'Tom'
+            loading: false, // controls when the loading sign appears on the button
+            dialog: false, // closes the add post window/pop up
+            postId: this.post.id, // array of blog posts
+            user: 'Tom'  // hard-coded user - change later
         }
     },
     methods: {
         publish() {
-            if(this.$refs.form.validate()) {
+            if(this.$refs.form.validate() && this.madeChanges() === true) {
                 //use this when we actually put it in the database to show a loading sign
                 this.loading = true; 
                
                 const update = {}
-                if (this.editedTitle) {
+                // only update the changes made
+                if (this.editedTitle !== this.post.title) {
                     update.title = this.editedTitle
                     update.date  = new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('T')[0]
                 }
-                if (this.editedContent) {
+                if (this.editedContent !== this.post.content) {
                     update.content = this.editedContent
                     update.date  = new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('T')[0]
                 }
@@ -97,14 +95,18 @@ export default {
         },
         // reset editing stage 
         reset() {
-            this.dialog = false; 
+            this.dialog = false,
             this.editedTitle = this.post.title,
             this.editedContent = this.post.content
-        }
-    },
-    watch: {
-        dialog() {
-            this.reset();
+        },
+        // check if any changes when editing the blog post was made
+        madeChanges() {
+            if (this.editedTitle === this.post.title && this.editedContent === this.post.content) {
+                this.$emit('blogPostNotUpdated')
+                return false;
+            } else {
+                return true;
+            }
         }
     }
 }
