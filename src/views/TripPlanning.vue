@@ -46,16 +46,16 @@
             </v-flex>
             <v-flex d-flex xs8 sm8 md8 order-lg4>
               <p style="font-family:Quicksand; font-size:15px;">
-                {{arrtime}}
+                {{arrtime}} {{loc}}
                 <br>
                 {{msg["start"]}} TO {{msg["end"]}}
                 <v-divider></v-divider> 
                 <br>
                 LENGTH OF TRIP<br> {{msg["dis"]}}
                 <br>
-                TRIP TIME<br> {{msg["time"]}}
+                APPROXIMATE TRIP TIME<br> {{msg["time"]}}
                 <br>
-                WEATHER AT ARRIVAL<br>
+                WEATHER<br> {{weather}} {{temp}} degrees
                 <!--11&#0176;C--><br>
                 MY TRIP PLAYLIST<br><v-divider></v-divider> 
                 <img :src=photo class=”cropimg”>
@@ -84,6 +84,12 @@
 
   export default {
     name: 'App',
+    props: {
+      loc: {
+      type: String,
+      required: false
+    },
+    },
     components: {
       sidebar,
       timeline,
@@ -100,6 +106,8 @@
         deptime: '',
         arrtime: '',
         address:'',
+        weather:'',
+        temp:''
       };
     },
 
@@ -142,6 +150,18 @@
             console.error(error);
           });
       },
+      getTripWeather() {
+        const path = 'http://localhost:5000/trips/weather';
+        axios.get(path)
+          .then((res) => {
+            this.weather = res.data["forecasts"]["weather"]["days"][0]["entries"][0]["precis"];
+            this.temp = res.data["forecasts"]["weather"]["days"][0]["entries"][0]["max"];
+          })
+          .catch((error) => {
+            // eslint-disable-next-line
+            console.error(error);
+          });
+      },
       getTime(time) {
         this.deptime = time
         this.arrtime = time + this.msg["timesec"]
@@ -158,6 +178,7 @@
       
       
       created() {
+        this.getTripWeather();
         this.getTripPhoto();
         this.getTrip();
         this.getTripSummary();

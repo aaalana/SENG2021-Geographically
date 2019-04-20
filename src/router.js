@@ -40,7 +40,8 @@ export default new Router({
     {
       path: '/tripPlanning',
       name: 'tripPlanning',
-      component: () => import('./views/TripPlanning.vue')
+      component: () => import('./views/TripPlanning.vue'),
+      props: true
     },
     {
       path: '/myProfile',

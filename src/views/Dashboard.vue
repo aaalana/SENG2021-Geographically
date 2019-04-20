@@ -14,9 +14,13 @@
         <v-flex xs12>
           <h2 style="font-family:Quicksand;padding-bottom:30px;padding-top:30px;font-size:30px">Nearby Attractions</h2>
           <p style="font-size:20px;padding:5px">Royal Botanical Gardens</p>
+          <router-link :to="{ name: 'tripPlanning', params: {loc} }">
           <img id = "yeet" src="../assets/royalbg.png" style="padding:5px" height="232px" width="309px">
+          </router-link>
           <p style="font-size:15px;padding:5px">Anzac Memorial</p>
+          <router-link to="/tripPlanning">
           <img id = "yeet" src= "../assets/anzac.png" style="padding:5px" height="232px" width="309px">
+          </router-link>
         </v-flex>
       </v-layout> 
 
@@ -24,12 +28,14 @@
         <v-flex xs12>
           <h3 style="font-family:Quicksand;padding:30px;font-size:30px">Road Trip!</h3>
             <v-carousel style="width:90%">
+            <router-link to="/tripPlanning">
               <v-carousel-item
                 v-for="(item,i) in items"
                 :key="i"
                 :src="item['src']"
                 :to='"http://google.com/"'
               ></v-carousel-item>
+            </router-link>
             </v-carousel>
         </v-flex>
       </v-layout>
@@ -57,7 +63,8 @@ export default {
   data () {
     return {
       items: [],
-      photo: []
+      photo: [],
+      loc: 'Sydney'
     }
   },
   methods: {

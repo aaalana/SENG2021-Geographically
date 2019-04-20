@@ -5,6 +5,7 @@ from flask_cors import CORS
 from resources.Places import *
 from resources.Routing import *
 from resources.parse import *
+from resources.Weather import *
 from pymongo import MongoClient
 
 ### Import resources
@@ -34,7 +35,6 @@ route = [
 
 recommendations = Places.findPointsOfInterest()
 locationphotos = Places.getPhotoRecs(recommendations)
-
 print(locationphotos)
 locations = json.loads(locationphotos)
 #print(findRoute)
@@ -97,12 +97,19 @@ class Location(Resource):
         print(summary)
         return location
 
+class LocWeather(Resource):
+    def get(self):
+        locationID = Weather.getLocationID(route[0]['end'])[0]["id"]
+        weather = Weather.getWeather(locationID)
+        return weather
+
 api.add_resource(Recommendations, '/recommendation')
 api.add_resource(Routing, '/trips')
 api.add_resource(LocSummary, '/trips/summary')
 api.add_resource(DestinationPhoto, '/trips/photo')
 api.add_resource(Location, '/location')
 api.add_resource(CurrentLocation, '/current')
+api.add_resource(LocWeather, '/trips/weather')
 @app.route('/')
 def test_page():
     return Recommendations
