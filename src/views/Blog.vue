@@ -16,25 +16,56 @@
         </nav>
         <v-content>
             <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
-            <v-flex mb-4>
-                <h1 class="display-2 font-weight-bold mb-3">
-                    <br>My Blog
-                </h1>
-                <h1 class="display-1 font-weight-bold mb-3">
-                    <br>Posts
-                </h1>
-                <AddPost @blogPostAdded="snackbar = true" />
-            </v-flex>
+         
+                <v-flex mb-4>
+                    <h1 class="display-2 font-weight-bold mb-3">
+                        <br>My Blog
+                    </h1>
+                    <h1 class="display-1 font-weight-bold mb-3">
+                        <br>Posts
+                    </h1>
+                    <AddPost @blogPostAdded="snackbar = true" />
+                </v-flex>
+                <v-container>
+                    <v-layout justify-center row wrap>
+                        <v-flex>
+                            <v-text-field
+                            v-model="search"
+                            style="font-family:Quicksand; font-size:13px;"
+                            solo
+                            prepend-inner-icon="search"
+                            label="Search blog posts"
+                            ></v-text-field>   
+                        </v-flex>
+                    </v-layout>
+                    <v-layout>
+                        <v-btn flat color="grey" @click="sortBy('title')">
+                            <v-icon left>folder</v-icon>
+                            <span class="text-lowercase">By blog post title</span>
+                        </v-btn>
+                        <v-btn flat color="grey" @click="sortBy('date')">
+                            <v-icon left>date_range</v-icon>
+                            <span class="text-lowercase">By most recent date</span>
+                        </v-btn>
+                    </v-layout>
+                </v-container>
 
             <v-layout row wrap v-if="databaseNotEmpty === false && stopLoading === false">
+                  <div v-if="empty === true"><h3 class= "font-weight-regular">You have no blog posts.</h3></div>  
                 <v-flex xs12 class="text-xs-center">
-                    <v-progress-circular indeterminate :size="70" :width="7" color="info"></v-progress-circular>
+                    <v-progress-circular 
+                    indeterminate 
+                    :size="70" 
+                    :width="7" color="info"></v-progress-circular>
                 </v-flex>
             </v-layout>
-
-            <v-container class="my-5">
-                <div v-if="empty === true"><h3 class= "font-weight-regular">You have no blog posts.</h3></div>
-                <v-card v-for="post in posts" :key="post.id">
+            <div class='text-xs-center' v-if="empty === true"><h3 class= "font-weight-regular">You have no blog posts.</h3></div> 
+            <div class='text-xs-center' v-if="noSearchResults() === true && databaseNotEmpty === true">
+                <h3 class= "font-weight-regular">Sorry! We couldn't find what you were looking for.</h3>
+                <v-icon large>sentiment_very_dissatisfied</v-icon>
+            </div> 
+            <v-container class="my-3">
+                <v-card v-for="post in filteredBlogs.slice((page - 1) * displayAmount, displayAmount * page)" :key="post.id">
                     <v-layout row wrap :class="'pa-3 post ${post.status}'"> 
                         <v-flex xs6 md4>
                             <v-icon large left>description</v-icon>
@@ -62,6 +93,16 @@
                         </v-flex>
                     </v-layout>
                 </v-card>
+             
+                <v-layout align-content-center justify-center>
+                    <v-flex xs0 md0 >
+                        <v-pagination
+                            v-model="page"
+                            :length="Math.ceil(posts.length / displayAmount)"
+                        ></v-pagination>
+                    </v-flex>
+                </v-layout>
+
             </v-container>
             <br><br><br>
         </v-content>
@@ -89,12 +130,15 @@ export default {
     data() {
         return {
             posts: [],
-            snackbar: false, // make blogpost
-            snackbar2: false, // update blogpost
-            snackbar3: false, // cannot update blogpost
-            databaseNotEmpty: false, // looks at when firebase finishes putting data into the posts array
+            snackbar: false, // make blogpost alert
+            snackbar2: false, // update blogpost alert
+            snackbar3: false, // cannot update blogpost alert
+            databaseNotEmpty: false, // looks at when firebase finishes putting data into the posts array to control when the loading sign shows
             stopLoading: false,
-            empty: false // check if there are any blog posts
+            empty: false, // check if there are any blog posts
+            search: '',
+            page: 1,
+            displayAmount: 10
         }
     },
     methods: {
@@ -131,6 +175,20 @@ export default {
                 }
             }
             this.posts.splice(index, 1)
+        },
+        noSearchResults() {
+            if (this.filteredBlogs.length === 0) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+        sortBy(prop) {
+            if (prop === 'title') {
+                this.posts.sort((a,b) => a[prop] < b[prop] ? -1 : 1);
+            } else {
+                this.posts.sort((a,b) => a.date > b.date ? -1 : 1);
+            }
         }
     },
     created() {
@@ -156,18 +214,14 @@ export default {
                 this.empty = true; 
             }
         })
-        
+    }, 
+    computed: {
+        // search function
+        filteredBlogs: function() {
+            return this.posts.filter((post) => {
+                return post.title.match(this.search);
+            });
+        }
     }
 }
 </script>
-
-<style>
-.post.published {
-    border-left: 4px solid #3cd1c2;
-
-}
-
-.post.draft {
-    border-left: 4px solid orange;
-}
-</style>
