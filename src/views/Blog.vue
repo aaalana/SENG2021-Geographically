@@ -57,7 +57,7 @@
 
                         <v-flex>
                             <v-card-actions class="text-xs-center">
-                                <router-link :to ="/blog/ + post.id"><v-btn round style="border-radius:7px; width:250px; height:50px;" color="info" class="font-weight-regular subheading" dark>VIEW BLOG POST</v-btn></router-link>
+                                <router-link :to ="'/blog/' + post.id" style="text-decoration: none;"><v-btn round style="border-radius:7px; width:250px; height:50px;" color="info" class="font-weight-regular subheading" dark>VIEW BLOG POST</v-btn></router-link>
                             </v-card-actions>
                         </v-flex>
                     </v-layout>
@@ -92,7 +92,7 @@ export default {
             snackbar: false, // make blogpost
             snackbar2: false, // update blogpost
             snackbar3: false, // cannot update blogpost
-            databaseNotEmpty: false, // controls if the loading sign will start
+            databaseNotEmpty: false, // looks at when firebase finishes putting data into the posts array
             stopLoading: false,
             empty: false // check if there are any blog posts
         }
@@ -116,12 +116,13 @@ export default {
             }
             this.posts.splice(index, 1)
 
+            // trigger empty blog posts message 
             if (this.posts.length === 0) {
                 this.empty = true;
             }
         },
         updatePost(post) {
-            // delete the post after the data has been pushed into the posts array via created()
+            // delete the old post after the updated data has been pushed into the posts array via created()
             let index
             for (let i = 0; i < this.posts.length; i++) {
                 if (post.id === this.posts[i].id) {
@@ -147,6 +148,9 @@ export default {
                     })
                 }
             })
+            // if nothing has been modified/added to the database, there are no blog posts
+            // we no longer need to wait for firebase to add data into the posts array 
+            // when the webpage first renders
             if (this.databaseNotEmpty === false) {
                 this.stopLoading = true;
                 this.empty = true; 

@@ -1,9 +1,15 @@
 <template>
     <div id="singleBlog">
-        <v-btn round style="border-radius:7px; width:250px; height:50px;" color="info" class="font-weight-regular subheading" dark>VIEW BLOG POST</v-btn>
-        uhgdsvkl
-        <h1></h1>
-        <article></article>
+    <v-container>
+        <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
+        <h1 style="font-family: Quicksand;">{{ post.title }}</h1>
+        <v-layout row justify-start align-start>
+            <v-flex pr-4 xs6 md6 class="grey--text" style="word-wrap: break-word;">Written by {{ post.user }}</v-flex>
+            <v-flex xs6 md6 class="grey--text" style="word-wrap: break-word;">Modified on {{ post.date }}</v-flex>
+        </v-layout>
+         <br>
+        <article>{{ post.content }}</article>
+    </v-container>
     </div>
 </template>
 
@@ -18,14 +24,11 @@ export default {
         }
     },
     created() {
-        db.collection('posts').doc(this.id).get().then(snapshot => {
+        db.collection('posts').doc(this.id).get().then(doc => {
             // snapshot.doc = all docs from database
             // forEach = looping through docs
-            snapshot.docs.forEach(doc => {
-                //this.posts.push(doc.data())
-                const singlePost = doc.data();
-                console.log(doc.data())
-            })
+            this.post = doc.data();
+            console.log(doc.data())
         })
     }
 }

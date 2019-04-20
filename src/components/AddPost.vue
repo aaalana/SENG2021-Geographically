@@ -27,7 +27,8 @@
                         <h2>Preview</h2>
                     </v-card-title>
                     <v-card-text>
-                        <h2 style="word-wrap: break-word;">{{ title }}</h2>
+                        <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
+                        <h2 style="font-family:Quicksand; word-wrap: break-word;">{{ title }}</h2>
                         <v-layout row justify-start align-start>
                             <v-flex pr-4 xs6 md6 class="caption grey--text" style="word-wrap: break-word;">Written by {{ user }}</v-flex>
                             <v-flex xs6 md6 class="caption grey--text" style="word-wrap: break-word;">Modified on {{ date }}</v-flex>

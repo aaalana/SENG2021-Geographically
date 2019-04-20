@@ -27,7 +27,8 @@
                     <h2>Preview</h2>
                 </v-card-title>
                 <v-card-text>
-                    <h2 style="word-wrap: break-word;">{{ editedTitle }}</h2>
+                    <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
+                    <h2 style="font-family:Quicksand; word-wrap: break-word;">{{ editedTitle }}</h2>
                     <v-layout row justify-start align-start>
                         <v-flex pr-4 xs6 md6 class="caption grey--text" style="word-wrap: break-word;">Written by {{ user }}</v-flex>
                         <v-flex xs6 md6 class="caption grey--text" style="word-wrap: break-word;">Modified on {{ date }}</v-flex>
@@ -55,14 +56,10 @@ export default {
             inputRules: [
                 v => v.trim() !== '' || 'You cannot leave this empty'
             ],
-            // controls when the loading sign appears on the button
-            loading: false,
-            // closes the add post window/pop up
-            dialog: false,
-            // array of blog posts
-            postId: this.post.id,
-            // hard-coded user - change later
-            user: 'Tom'
+            loading: false, // controls when the loading sign appears on the button
+            dialog: false, // closes the add post window/pop up
+            postId: this.post.id, // array of blog posts
+            user: 'Tom'  // hard-coded user - change later
         }
     },
     methods: {
@@ -102,6 +99,7 @@ export default {
             this.editedTitle = this.post.title,
             this.editedContent = this.post.content
         },
+        // check if any changes when editing the blog post was made
         madeChanges() {
             if (this.editedTitle === this.post.title && this.editedContent === this.post.content) {
                 this.$emit('blogPostNotUpdated')
