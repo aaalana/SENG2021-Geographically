@@ -9,10 +9,10 @@
           <v-flex>
             <v-card flat width=400px>
               <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
-              <v-card-title 
+              <v-card-title
                 style="font-family:Quicksand; font-size:30px;"
-              > My Profile <v-btn icon left><v-icon>edit</v-icon></v-btn>
-              </v-card-title> 
+              > My Profile <router-link to="/editProfile"><v-btn icon left><v-icon>edit</v-icon></v-btn></router-link>
+              </v-card-title>
               <v-divider></v-divider>
               <v-card-text style="font-family:Quicksand; font-size:15px;">
                 <h4 style="font-family:Quicksand; font-size:20px;">John Doe</h4>
@@ -22,10 +22,10 @@
             <v-spacer></v-spacer>
             <v-card flat width=400px>
               <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
-              <v-card-title 
+              <v-card-title
                 style="font-family:Quicksand; font-size:30px;"
               > My Blogs <v-btn icon left><v-icon>edit</v-icon></v-btn>
-              </v-card-title> 
+              </v-card-title>
               <v-divider></v-divider>
               <v-card-text style="font-family:Quicksand; font-size:15px;">
                 <v-card style="font-family:Quicksand; font-size:15px;" width=300px>
@@ -44,10 +44,10 @@
           <v-flex>
             <v-card flat width=400px>
               <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
-              <v-card-title 
+              <v-card-title
                 style="font-family:Quicksand; font-size:30px;"
               > My Trips <v-btn icon left><v-icon>edit</v-icon></v-btn>
-              </v-card-title> 
+              </v-card-title>
               <v-divider></v-divider>
               <v-card-text style="font-family:Quicksand; font-size:15px;">
                 <v-card style="font-family:Quicksand; font-size:15px;" width=300px>
@@ -61,15 +61,15 @@
 
                   </v-layout>
                 </v-card>
-                
+
               </v-card-text>
             </v-card>
           </v-flex>
         </v-layout>
       </v-container>
-    </div> 
+    </div>
     <Footer />
-  </v-app>   
+  </v-app>
 </template>
 
 <script>

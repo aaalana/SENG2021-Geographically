@@ -47,6 +47,11 @@ export default new Router({
       component: () => import('./views/MyProfile.vue')
     },
     {
+      path: '/editProfile',
+      name: 'editProfile',
+      component: () => import('./views/EditProfile.vue')
+    },
+    {
       path: '/playlists',
       name: 'playlists',
       component: () => import('./views/Playlists.vue')
