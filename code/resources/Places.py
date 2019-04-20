@@ -73,9 +73,12 @@ class Places(Resource):
                 break
             d = {}
             refID =pn["photos"][0]["photo_reference"]
+            name = pn["name"]
+            print(name)
             width = 1000
             url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth={width}&photoreference={refID}&key={APIKEY}".format(width = width, refID = refID, APIKEY = APIKEY) 
             d['src'] = url
+            d['name'] = name
             lst.append(d)
         print(lst)
         return json.dumps(lst)

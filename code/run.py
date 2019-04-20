@@ -69,6 +69,16 @@ class DestinationPhoto(Resource):
         print(info)
         return Places.getPhoto(info)
 
+class CurrentLocation(Resource):
+    def get(self):
+        lat,lng = Places.getCurrentLocation()
+        print(lat)
+        print(lng)
+
+        return jsonify( { 
+            'lat': lat,
+            'lng': lng
+        })
 
 class Location(Resource):
     def get(self):
@@ -92,6 +102,7 @@ api.add_resource(Routing, '/trips')
 api.add_resource(LocSummary, '/trips/summary')
 api.add_resource(DestinationPhoto, '/trips/photo')
 api.add_resource(Location, '/location')
+api.add_resource(CurrentLocation, '/current')
 @app.route('/')
 def test_page():
     return Recommendations
