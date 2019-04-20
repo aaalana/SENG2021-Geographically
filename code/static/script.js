@@ -94,7 +94,4 @@ function handleLocationError (content, position) {
     infoWindow.setPosition(position);
     infoWindow.setContent(content);
     infoWindow.open(map);
-
-
-  }
 }

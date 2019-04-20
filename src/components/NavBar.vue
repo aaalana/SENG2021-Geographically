@@ -6,109 +6,27 @@
       <v-toolbar-title class="headline text">
         <span style= "font-family:Quicksand" class="font-weight-regular">Geographically</span>
       </v-toolbar-title>
-      <v-spacer></v-spacer>
-        <template>
-          <form id="signup-form">
-            <v-layout row justify-center style="width:10px;height:10px;">
-              <v-dialog v-model="dialog" dark persistent max-width="600px">
-                <template v-slot:activator="{ on }">
-                  <v-btn color="normal" style= "font-family:Quicksand" border-radius=0px flat dark right v-on="on">Sign Up</v-btn>
-                </template>
-                <v-card>
-                  <v-card-title>
-                    <span class="headline" colour=white >Sign Up</span>
-                  </v-card-title>
-                  <v-card-text>
-                    <v-container grid-list-md>
-                      <v-layout wrap>
-                        <v-flex xs12>
-                          <v-text-field label="Username*" required></v-text-field>
-                        </v-flex>
-                        <v-flex xs12 sm6 md4>
-                          <v-text-field label="First Name*" required></v-text-field>
-                        </v-flex>
-                        <v-flex xs12 sm6 md4>
-                          <v-text-field
-                            label="Last name*"
-                            hint="example of persistent helper text"
-                            persistent-hint
-                            required
-                          ></v-text-field>
-                        </v-flex>
-                        <v-flex xs12>
-                          <v-text-field id="signup-email" label="Email*" required></v-text-field>
-                        </v-flex>
-                        <v-flex xs12>
-                          <v-text-field label="Mobile"></v-text-field>
-                        </v-flex>
-                        <v-flex xs12>
-                          <v-text-field id="signup-password" label="Password*" type="password" required></v-text-field>
-                        </v-flex>
-                      </v-layout>
-                    </v-container>
-                    <small>*indicates required field</small>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" style="min-width:100px;min-height:50px;" flat @click="dialog=false">Close</v-btn>
-                    <v-btn id="submit" color="blue darken-1" style="min-width:100px;min-height:50px;" flat @click="dialog=false">Submit</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-            </v-layout>
-          </form>
-        </template>
-        <template>
-          <v-layout row justify-center style="width:10px;height:10px;">
-            <v-dialog v-model="dialog2" dark persistent max-width="600px">
-              <template v-slot:activator="{ on }">
-                <v-btn color="normal" style= "font-family:Quicksand" flat dark v-on="on">Login</v-btn>
-              </template>
-              <v-card>
-                <v-card-title>
-                  <span class="headline">Login</span>
-                </v-card-title>
-                <v-card-text>
-                  <v-container grid-list-md>
-                    <v-layout wrap>
-                      <v-flex xs12>
-                        <v-text-field label="Username*" required></v-text-field>
-                      </v-flex>
-                      <v-flex xs12>
-                        <v-text-field label="Password*" type="password" required></v-text-field>
-                      </v-flex>
-                    </v-layout>
-                  </v-container>
-                  <small>*indicates required field</small>
-                </v-card-text>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" style="min-width:100px;min-height:50px;" flat @click="dialog2=false">Close</v-btn>
-                  <router-link to="/dashboard">
-                    <v-btn color="blue darken-1" style="min-width:100px;min-height:50px;" flat @click="dialog2=false">Login</v-btn>
-                  </router-link>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </v-layout>
-        </template>
+      <v-spacer></v-spacer>  
+      <Signup />
+      <Login />
     </v-toolbar>
+  
   </nav>
 </template>
 
-<script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-firestore.js"></script>
-
-<script src="../scripts/auth.js"></script>
-
 <script>
-import db from '@/fb'
-const auth = firebase.auth();
-  export default {
-    data: () => ({
-      dialog: false,
+import Signup from '@/components/Signup.vue'
+import Login from '@/components/Login.vue'
+
+export default {
+  components: {
+      Signup,
+      Login
+  },
+  data() {
+    return {
       dialog2: false
-    })
+    }
   }
+}
 </script>
