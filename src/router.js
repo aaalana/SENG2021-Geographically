@@ -59,6 +59,11 @@ export default new Router({
       component: () => import('./views/Playlists.vue')
     },
     {
+      path: '/blog/:id',
+      name: 'singleBlog',
+      component: () => import('./views/SingleBlog.vue')
+    },
+    {
       path: '/FAQs',
       name: 'FAQs',
       component: () => import('./views/FAQ.vue')
