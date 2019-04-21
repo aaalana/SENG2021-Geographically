@@ -9,10 +9,10 @@
         >
             <v-layout pt-6>
                 <v-flex xs9 sm9 md9>
-                <v-form>
+                <v-form @submit="onSubmit"
+          onSubmit="return false;">
                     <v-text-field
                         style="font-family:Quicksand; font-size:15px;"
-                        solo
                         label="Home"
                         prepend-inner-icon="place"
                         v-model="location.origin"
@@ -32,16 +32,15 @@
         >
             <v-layout pt-6>
                 <v-flex xs9 sm9 md9>
-                <v-form>
+                <v-form @submit="onSubmit"
+          onSubmit="return false;">
                     <v-text-field
                         style="font-family:Quicksand; font-size:15px;"
-                        solo
                         label="Search"
                         prepend-inner-icon="place"
                         v-model="location.dest"
                         @keyup.native.enter="sendInfo()"
                     ></v-text-field>
-                    <v-btn @click="sendInfo()">submit</v-btn>
                 </v-form>
                 </v-flex>
                 <v-flex>
@@ -85,8 +84,10 @@ export default {
         }
         )
         .then(() => {
+            alert("Press save trip to display info for destination " + this.location.dest)
             console.log(dest);
-            //this.result = this.getLocation()
+            this.getLocation()
+            this.reloadPage();
             console.log(this.result); 
         })
         .catch((err) => {

@@ -10,11 +10,12 @@
         </v-flex>
         <v-spacer></v-spacer>
         <v-flex mt-4 mr-4>
-          <v-form>
+          <v-form @submit="submit"
+          onSubmit="return false;">
             <v-text-field
              style="font-family:Quicksand; font-size:15px;"
-             solo
              label="Search a location"
+             v-model="location"
              prepend-inner-icon="place"
              ></v-text-field>
           </v-form>
@@ -27,7 +28,7 @@
           id="gmap_canvas"
           width="100%"
           height="100%"
-          src="https://maps.google.com/maps?q=Canberra&t=&z=13&ie=UTF8&iwloc=&output=embed"
+          :src="url"
           frameborder="0"
           scrolling="no"
           marginheight="0"
@@ -44,14 +45,27 @@
 // @ is an alias to /src
 import Menu from '@/components/Menu.vue'
 import Footer from '@/components/Footer.vue'
+import axios from 'axios'
 
 export default {
   name: 'map',
   components: {
     Menu,
     Footer
-  }
-}
+  },
+  data() {
+    return {
+      location: "",
+      url: "https://maps.google.com/maps?q=&t=&z=13&ie=UTF8&iwloc=&output=embed",
+    };
+  },
+  methods: {
+    submit:function() {
+      this.url = "https://maps.google.com/maps?q="+this.location+"&t=&z=13&ie=UTF8&iwloc=&output=embed"
+    },
+  },
+
+};
 </script>
 
 <style>

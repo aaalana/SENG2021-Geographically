@@ -8,6 +8,7 @@ class Route(Resource):
     def findRouteInfo(start, end):
         #start = "Bridgewater, Sa, Australia"
         #finish = "Stirling, SA, Australia"
+        print("The following should either be id or coords")
         print(start)
         if isinstance(start, tuple):
             start = str(start[0]+','+start[1]) 

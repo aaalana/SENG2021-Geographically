@@ -28,8 +28,8 @@ route = [
     {
         'start': Places.getCurrentLocation(),
         'startID': Places.getCurrentLocation(),
-        'end': "",
-        'endID': ""
+        'end': "Canberra",
+        'endID': Places.getPlacesID("Canberra")["candidates"][0]["place_id"]
     }
 ]
 #we should get a json returning from the other functions and call it from here
@@ -48,11 +48,13 @@ class Routing(Resource):
     def get(self):
         print("dist")
         print(route)
-        print(Places.getCurrentLocation())
         if not route[0]['start']:
+            print(Places.getCurrentLocation())
             findRoute = Route.findRouteInfo(Places.getCurrentLocation(), route[0]['endID'])
         else:
-            findRoute = Route.findRouteInfo(route[0]['start'], route[0]['endID'])
+            print("start id")
+            print(route[0]['startID'])
+            findRoute = Route.findRouteInfo(route[0]['startID'], route[0]['endID'])
         return jsonify(findRoute)        
     def put(self,start,end):
         findRoute = Route.findRouteInfo(start, end)

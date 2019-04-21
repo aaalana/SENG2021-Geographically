@@ -10,11 +10,13 @@
   "dependencies": {
     "axios": "^0.18.0",
     "firebase": "^5.10.0",
+    "google-autocomplete-vue": "^1.0.17",
     "moment": "^2.24.0",
     "mongodb": "^3.2.3",
     "vue": "^2.6.6",
     "vue-google-autocomplete": "^1.1.0",
     "vue-router": "^3.0.2",
+    "vuemit": "^1.0.9",
     "vuetify": "^1.5.5"
   },
   "devDependencies": {
