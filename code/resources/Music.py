@@ -108,8 +108,10 @@ class Music(Resource):
 
         sp = spotipy.Spotify(auth=token)
 
-        results = sp.search(q="Rain", type="playlist", limit=10)
+        results = sp.search(q="Road Trip", type="playlist", limit=10)
         for i, t in enumerate(results['playlists']['items']):
             print (' ', i, t['external_urls']['spotify'])
 
         return results
+
+Music.searchPlaylist()
