@@ -41,7 +41,6 @@
       </v-layout>
       <br><br>
     </v-content>
-    <ContactUs />
     <Menu />
     <Footer />
   </div>
