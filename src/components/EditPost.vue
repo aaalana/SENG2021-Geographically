@@ -89,6 +89,7 @@ export default {
             inputRules: [
                 v => v.trim() !== '' || 'You cannot leave this empty'
             ],
+            locRules: [v => v.length <= 25 || 'Max 25 characters'],
             loading: false, // controls when the loading sign appears on the button
             dialog: false, // closes the add post window/pop up
             postId: this.post.id, // array of blog posts
@@ -124,7 +125,10 @@ export default {
                     update.locationRated = this.rateLoc;
                     update.rating = this.rating;
                     this.hasupdated = true;
-                } 
+                } else if (this.rating !== this.post.rating) {
+                    update.rating = this.rating;
+                    this.hasupdated = true;
+                }
                 
                 if (this.hasupdated === true) {
                     update.date  = new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('T')[0];
