@@ -3,8 +3,9 @@
         <v-btn flat fab slot="activator"><v-icon>edit</v-icon></v-btn>
             <v-layout row wrap>
             <v-card max width="50%" class="px-5">
+                <br><br>
                 <v-card-title>
-                    <h2>Edit Blog Post</h2>
+                     <h2 style='font-family:Quicksand;'>Edit Blog Post</h2>
                 </v-card-title>
                 <v-card-text>
                     <v-form ref="form">
@@ -39,8 +40,9 @@
                 </v-card-text>
             </v-card>
              <v-card max width="50%" class="px-5">
+                <br><br>
                 <v-card-title>
-                    <h2>Preview</h2>
+                     <h2 style='font-family:Quicksand;'>Preview</h2>
                 </v-card-title>
                 <v-card-text>
                     <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>

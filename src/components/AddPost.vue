@@ -1,10 +1,11 @@
 <template>
     <v-dialog persistent no-click-animation max width="100%" v-model="dialog">
-        <v-btn round style="border-radius:7px;" slot="activator" class="info">Add new post</v-btn>
+        <v-btn round style="border-radius:7px;" slot="activator" class="info"><b>Add new post</b></v-btn>
             <v-layout row wrap>
             <v-card width="50%" class="px-5">
+                <br><br>
                 <v-card-title>
-                    <h2>Add Blog Post</h2>
+                    <h2 style='font-family:Quicksand;'>Add Blog Post</h2>
                 </v-card-title>
                 <v-card-text>
                     <v-form ref="form">
@@ -38,8 +39,9 @@
                 </v-card-text>
                 </v-card>
                 <v-card max width="50%" class="px-5">
-                    <v-card-title primary-title>
-                        <h2>Preview</h2>
+                    <br><br>
+                    <v-card-title>
+                        <h2 style='font-family:Quicksand;'>Preview</h2>
                     </v-card-title>
                     <v-card-text>
                         <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
