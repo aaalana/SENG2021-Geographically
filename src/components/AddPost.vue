@@ -11,10 +11,25 @@
                         <v-text-field label="Title" v-model="title" prepend-icon="folder" :rules="inputRules"></v-text-field>
                         <v-textarea label="Tell us about your trip" v-model="content" prepend-icon="edit" :rules="inputRules"></v-textarea>
 
+                        <v-text-field label="Rate the location you visited (optional)" counter="25" :rules="locRules" v-model="rateLoc" prepend-icon="location_on"></v-text-field>
+                        <br>
+                        <v-layout>
+                            <v-spacer></v-spacer>
+                            <span class="grey--text text--lighten-1 mr-2">({{ rating }})</span>
+                            <v-rating
+                                v-model="rating"
+                                background-color="yellow accent-4"
+                                color="yellow accent-4"
+                                dense
+                                half-increments
+                                hover
+                                size="20"
+                            ></v-rating>
+                        </v-layout>
+
                         <v-menu>
                             <v-text-field disabled :value="date" slot="activator" label="Date" prepend-icon="date_range"></v-text-field>
                         </v-menu>
-                        
                         <v-spacer></v-spacer>
 
                         <v-btn flat round style="border-radius:7px;" class="info mx-3 mt-3" @click="publish" :loading="loading">Save and Publish</v-btn>
@@ -30,8 +45,25 @@
                         <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
                         <h2 style="font-family:Quicksand; word-wrap: break-word;">{{ title }}</h2>
                         <v-layout row justify-start align-start>
-                            <v-flex pr-4 xs6 md6 class="caption grey--text" style="word-wrap: break-word;">Written by {{ user }}</v-flex>
-                            <v-flex xs6 md6 class="caption grey--text" style="word-wrap: break-word;">Modified on {{ date }}</v-flex>
+                            <v-flex pr-4 xs4 md4 class="caption grey--text" style="word-wrap: break-word;">Written by {{ user }}</v-flex>
+                            <v-flex xs4 md4 class="caption grey--text" style="word-wrap: break-word;">Modified on {{ date }}</v-flex>
+                            <v-flex xs4 md4 class="caption grey--text" style="word-wrap: break-word;">
+                                
+                                <div class="caption grey--text" style="word-wrap: break-word;"><v-icon small class="mr-1">location_on</v-icon>{{ rateLoc }}</div>
+                              
+                                <v-rating
+                                class="ml-3"
+                                v-model="rating"
+                                background-color="yellow accent-4"
+                                color="yellow accent-4"
+                                dense
+                                small
+                                half-increments
+                                readonly
+                                size="20"
+                                ></v-rating>
+                                
+                            </v-flex>
                         </v-layout>
                         <br>
                         <div style="word-wrap: break-word;">{{ content }}</div>
@@ -53,6 +85,7 @@ export default {
             inputRules: [
                 v => v.trim() !== '' || 'You cannot leave this empty'
             ],
+            locRules: [v => v.length <= 25 || 'Max 25 characters'],
             // controls when the loading sign appears on the button
             loading: false,
             // closes the add post window/pop up
@@ -60,7 +93,9 @@ export default {
             // array of blog posts
             posts: [],
             // hard-coded user - change later
-            user: 'Tom'
+            user: 'Tom',
+            rating: 1,
+            rateLoc: ''
         }
     },
     methods: {
@@ -68,14 +103,25 @@ export default {
             if(this.$refs.form.validate()) {
                 //use this when we actually put it in the database to show a loading sign
                 this.loading = true; 
-                
-                const newBlogPost = {
-                    title: this.title,
-                    content: this.content,
-                    date: this.date,
-                    user: this.user
+                const newBlogPost = {}
+                if (this.rateLoc === '') {
+                    newBlogPost.title = this.title;
+                    newBlogPost.content= this.content;
+                    newBlogPost.date= this.date;
+                    newBlogPost.user= this.user;
+                    newBlogPost.rating= 0;
+                    newBlogPost.locationRated= '';
+                      
+                } else {
+                    newBlogPost.title= this.title;
+                    newBlogPost.content= this.content;
+                    newBlogPost.date= this.date;
+                    newBlogPost.user= this.user;
+                    newBlogPost.rating= this.rating;
+                    newBlogPost.locationRated= this.rateLoc;
+                    
                 }
-                
+              
                 // add to firebase
                 db.collection('posts').add(newBlogPost).then(() => {
                     console.log('blog post added successfully');
@@ -96,6 +142,8 @@ export default {
             //this.$refs.form.reset(this.title, this.content) resets everything
             this.title = '';
             this.content = '';
+            this.rating = 1;
+            this.rateLoc = '';
             this.$refs.form.resetValidation();
         },
     }

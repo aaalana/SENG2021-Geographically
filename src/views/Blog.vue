@@ -191,8 +191,10 @@ export default {
             if (prop === 'title') {
                 this.posts.sort((a,b) => a[prop] < b[prop] ? -1 : 1);
             } else if (prop === 'date') {
+                // most recent date
                 this.posts.sort((a,b) => a.date > b.date ? -1 : 1);
             } else {
+                // oldest date
                 this.posts.sort((a,b) => a.date < b.date ? -1 : 1);
             }
         }

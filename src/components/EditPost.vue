@@ -10,6 +10,22 @@
                     <v-form ref="form">
                         <v-text-field label="Title" v-model="editedTitle" prepend-icon="folder" :rules="inputRules"></v-text-field>
                         <v-textarea label="Tell us about your trip" v-model="editedContent" prepend-icon="edit" :rules="inputRules"></v-textarea>
+                        
+                        <v-text-field label="Rate the location you visited (optional)" counter="25" :rules="locRules" v-model="rateLoc" prepend-icon="location_on"></v-text-field>
+                        <br>
+                        <v-layout>
+                            <v-spacer></v-spacer>
+                            <span class="grey--text text--lighten-1 mr-2">({{ rating }})</span>
+                            <v-rating
+                                v-model="rating"
+                                background-color="yellow accent-4"
+                                color="yellow accent-4"
+                                dense
+                                half-increments
+                                hover
+                                size="20"
+                            ></v-rating>
+                        </v-layout>
 
                         <v-menu>
                             <v-text-field disabled :value="date" slot="activator" label="Date" prepend-icon="date_range"></v-text-field>
@@ -32,6 +48,23 @@
                     <v-layout row justify-start align-start>
                         <v-flex pr-4 xs6 md6 class="caption grey--text" style="word-wrap: break-word;">Written by {{ user }}</v-flex>
                         <v-flex xs6 md6 class="caption grey--text" style="word-wrap: break-word;">Modified on {{ date }}</v-flex>
+                         <v-flex xs4 md4 class="caption grey--text" style="word-wrap: break-word;">
+                                
+                                <div class="caption grey--text" style="word-wrap: break-word;"><v-icon small class="mr-1">location_on</v-icon>{{ rateLoc }}</div>
+                              
+                                <v-rating
+                                class="ml-3"
+                                v-model="rating"
+                                background-color="yellow accent-4"
+                                color="yellow accent-4"
+                                dense
+                                small
+                                half-increments
+                                readonly
+                                size="20"
+                                ></v-rating>
+                                
+                            </v-flex>
                     </v-layout>
                     <br>
                     <div style="word-wrap: break-word;">{{ editedContent }}</div>
@@ -59,7 +92,10 @@ export default {
             loading: false, // controls when the loading sign appears on the button
             dialog: false, // closes the add post window/pop up
             postId: this.post.id, // array of blog posts
-            user: 'Tom'  // hard-coded user - change later
+            user: 'Tom',  // hard-coded user - change later
+            rating: this.post.rating,
+            rateLoc: this.post.locationRated,
+            hasupdated: false
         }
     },
     methods: {
@@ -71,12 +107,27 @@ export default {
                 const update = {}
                 // only update the changes made
                 if (this.editedTitle !== this.post.title) {
-                    update.title = this.editedTitle
-                    update.date  = new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('T')[0]
+                    update.title = this.editedTitle;
+                    this.hasupdated = true;
                 }
+
                 if (this.editedContent !== this.post.content) {
-                    update.content = this.editedContent
-                    update.date  = new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('T')[0]
+                    update.content = this.editedContent;
+                    this.hasupdated = true;
+                }
+
+                if (this.rateLoc === '' && this.rateLoc !== this.post.locationRated) {
+                    update.locationRated = this.rateLoc;
+                    update.rating = 0;
+                    this.hasupdated = true;
+                } else if (this.rateLoc !== this.post.locationRated) {
+                    update.locationRated = this.rateLoc;
+                    update.rating = this.rating;
+                    this.hasupdated = true;
+                } 
+                
+                if (this.hasupdated === true) {
+                    update.date  = new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('T')[0];
                 }
 
                 // delete post from the database
@@ -97,13 +148,18 @@ export default {
         reset() {
             this.dialog = false,
             this.editedTitle = this.post.title,
-            this.editedContent = this.post.content
+            this.editedContent = this.post.content,
+            this.rating= this.post.rating,
+            this.rateLoc= this.post.locationRated
         },
         // check if any changes when editing the blog post was made
         madeChanges() {
-            if (this.editedTitle === this.post.title && this.editedContent === this.post.content) {
-                this.$emit('blogPostNotUpdated')
-                return false;
+            if (this.editedTitle === this.post.title && 
+                this.editedContent === this.post.content && 
+                this.rateLoc === this.post.locationRated &&
+                this.rating === this.post.rating) {
+                    this.$emit('blogPostNotUpdated')
+                    return false;
             } else {
                 return true;
             }
