@@ -60,6 +60,15 @@ class Places(Resource):
         response = requests.get(url)
         res = json.loads(response.text)
         return (res["results"])
+    
+    def getPlacesID(locationstr):
+        locationstr = locationstr.replace(' ','%20' )
+        url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input={locationstr}&inputtype=textquery&fields=formatted_address,name,rating,place_id&locationbias=circle:2000@-33.8452821,151.0281859&key={APIKEY}".format(locationstr = locationstr, APIKEY = APIKEY)
+        print(url)
+        response = requests.get(url)
+        res = json.loads(response.text)
+        print(res["candidates"][0]["place_id"])
+        return (res)
 
     def getPhotoRecs(locations):
         
@@ -93,3 +102,4 @@ class Places(Resource):
 #getPhotoLocation(id)
 #info = Places.getPlacesInfo("Darling Harbour")
 #Places.getPhoto(info)
+Places.getPlacesID("Broken Hill")

@@ -48,7 +48,7 @@
               <p style="font-family:Quicksand; font-size:15px;">
                 {{arrtime}} {{loc}}
                 <br>
-                {{msg["start"]}} TO {{msg["end"]}}
+                  {{msg["start"]}} TO {{msg["end"]}}
                 <v-divider></v-divider> 
                 <br>
                 LENGTH OF TRIP<br> {{msg["dis"]}}

@@ -27,7 +27,9 @@ CORS(app)
 route = [
     {
         'start': Places.getCurrentLocation(),
-        'end': "Canberra"
+        'startID': Places.getCurrentLocation(),
+        'end': "",
+        'endID': ""
     }
 ]
 #we should get a json returning from the other functions and call it from here
@@ -48,9 +50,9 @@ class Routing(Resource):
         print(route)
         print(Places.getCurrentLocation())
         if not route[0]['start']:
-            findRoute = Route.findRouteInfo(Places.getCurrentLocation(), route[0]['end'])
+            findRoute = Route.findRouteInfo(Places.getCurrentLocation(), route[0]['endID'])
         else:
-            findRoute = Route.findRouteInfo(route[0]['start'], route[0]['end'])
+            findRoute = Route.findRouteInfo(route[0]['start'], route[0]['endID'])
         return jsonify(findRoute)        
     def put(self,start,end):
         findRoute = Route.findRouteInfo(start, end)
@@ -93,6 +95,12 @@ class Location(Resource):
         location = request.get_json()
         route[0]['start'] = location['start']
         route[0]['end'] = location['end']
+        print("LOCATION")
+        print(route[0]['end'])
+        if route[0]['start']:
+            route[0]['startID'] = Places.getPlacesID(location['start'])["candidates"][0]["place_id"]
+        route[0]['endID'] = Places.getPlacesID(location['end'])["candidates"][0]["place_id"]
+        print(route[0]['endID'])
         summary = Summary.getPlaceSummary(location["end"])
         print(summary)
         return location

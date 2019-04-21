@@ -11,9 +11,12 @@ class Route(Resource):
         print(start)
         if isinstance(start, tuple):
             start = str(start[0]+','+start[1]) 
+            url = "https://maps.googleapis.com/maps/api/directions/json?origin={start}&destination=place_id:{end}&key={APIKEY}".format(start = start, end = end, APIKEY=APIKEY)
+        else:
+            url = "https://maps.googleapis.com/maps/api/directions/json?origin=place_id:{start}&destination=place_id:{end}&key={APIKEY}".format(start = start, end = end, APIKEY=APIKEY)
         print(start)
+        print("REEEEEEEEEEEEEEEE")
         print(end)
-        url = "https://maps.googleapis.com/maps/api/directions/json?origin={start}&destination={end}&key={APIKEY}".format(start = start, end = end, APIKEY=APIKEY)
         response = requests.get(url)
         res = json.loads(response.text)
 
