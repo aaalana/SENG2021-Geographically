@@ -64,7 +64,7 @@
                 </v-flex>
             </v-layout>
             <div class='text-xs-center' v-if="empty === true"><h3 class= "font-weight-regular">You have no blog posts.</h3></div> 
-            <div class='text-xs-center' v-if="noSearchResults() === true && databaseNotEmpty === true">
+            <div class='text-xs-center' v-if="noSearchResults() === true && databaseNotEmpty === true && empty == false">
                 <h3 class= "font-weight-regular">Sorry! We couldn't find what you were looking for.</h3>
                 <v-icon large>sentiment_very_dissatisfied</v-icon>
             </div> 
