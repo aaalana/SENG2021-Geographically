@@ -22,7 +22,7 @@
             </v-flex>
 
             <v-flex xs12>
-              <v-text-field v-model="password" :rules="inputRules" label="Password*" type="password" required></v-text-field>
+              <v-text-field v-model="password" :rules="inputRules" label="Password*" required :append-icon="show ? 'visibility' : 'visibility_off'" :type="show ? 'text' : 'password'" @click:append="show = !show"></v-text-field>
             </v-flex>
             <small>*indicates required field</small>
           </v-layout>
@@ -56,7 +56,8 @@ export default {
         inputRules: [
             v => v.trim() !== '' || 'You cannot leave this field empty'
         ],
-        success: false
+        success: false,
+        show: false
       }
     },
     methods: {
