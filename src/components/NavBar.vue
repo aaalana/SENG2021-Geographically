@@ -6,18 +6,17 @@
       <v-toolbar-title class="headline text">
         <span style= "font-family:Quicksand" class="font-weight-regular">Geographically</span>
       </v-toolbar-title>
-      <v-spacer></v-spacer>  
+      <v-spacer></v-spacer>
       <Signup />
       <Login />
     </v-toolbar>
-  
+
   </nav>
 </template>
 
 <script>
 import Signup from '@/components/Signup.vue'
 import Login from '@/components/Login.vue'
-
 export default {
   components: {
       Signup,

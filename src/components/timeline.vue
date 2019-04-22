@@ -39,7 +39,7 @@
                         label="Search"
                         prepend-inner-icon="place"
                         v-model="location.dest"
-                        @keyup.native.enter="sendInfo()"
+                        v-on:keyup.enter= "sendInfo()"
                     ></v-text-field>
                 </v-form>
                 </v-flex>
@@ -88,32 +88,38 @@ export default {
         }
         )
         .then(() => {
-            alert("Press save trip to display info for destination " + this.location.dest)
             console.log(dest);
-            this.getLocation()
+            
+            this.$emit('childToParent', this.location.origin)
+            this.$emit('childToParent2', this.location.dest)
+            this.getLocation();
             this.reloadPage();
             console.log(this.result); 
         })
         .catch((err) => {
             console.log(err)
         });
-      }
+      },
+        reloadPage(){
+            window.location.reload()
+        },
     },
-    initForm() {
-      this.location.origin = this.location.origin;
-      this.location.dest = this.location.dest;
-    },
+        initForm() {
+            this.location.origin = this.location.origin;
+          this.location.dest = this.location.dest;
+        },
     onSubmit() {
-      //evt.preventDefault();
+        //evt.preventDefault();
       this.sendInfo();
       this.getLocation();
       this.reloadPage();
     },
-    reloadPage(){
-        window.location.reload()
+    emitToParent () {
+      this.$emit('childToParent', this.location.origin)
+      this.$emit('childToParent2', this.location.dest)
     },
   created() {
-    this.getLocation();
+      this.getLocation();
   },
 };
 

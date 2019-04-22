@@ -1,3 +1,4 @@
+
 <template>
   <v-navigation-drawer
     v-model="drawer"
@@ -41,13 +42,27 @@
         <v-list-tile-content>
           <v-list-tile-title>{{ item.title }}</v-list-tile-title>
         </v-list-tile-content>
-        
+
       </v-list-tile>
+
+      <v-list-tile @click=logOut>
+        <v-list-tile-action>
+          <v-icon>subdirectory_arrow_left</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title>Log Out</v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+
     </v-list>
+
   </v-navigation-drawer>
 </template>
 
 <script>
+
+import firebase from 'firebase'
+
   export default {
     data () {
       return {
@@ -58,10 +73,17 @@
           { title: 'Map Mode', icon: 'map', route: '/map'},
           { title: 'Trip Planning', icon: 'directions_car', route: '/tripPlanning'},
           { title: 'Playlists', icon: 'queue_music', route: '/playlists'},
-          { title: 'My Blog', icon: 'library_books', route: '/blog'},
-          { title: 'Log Out', icon: 'subdirectory_arrow_left', route: '/'}
+          { title: 'My Blog', icon: 'library_books', route: '/blog'}
         ],
         mini: true
+      }
+    },
+    methods: {
+      logOut: function() {
+        firebase.auth().signOut().then(() => {
+          console.log('user signed out');
+          this.$router.push('/');
+        })
       }
     }
   }

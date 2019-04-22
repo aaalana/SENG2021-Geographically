@@ -12,7 +12,7 @@
             <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
             <h1 style="font-family:Quicksand; font-size:30px;">Plan</h1> 
             <v-flex d-flex xs4 sm4 md4>   
-              <timeline />
+              <timeline :parentData="myData" v-on:childToParent2="onChildClick2" v-on:childToParent="onChildClick"/>
             </v-flex>
             <v-flex d-flex xs12 sm12 md12 order-lg2>
               <v-layout row wrap>
@@ -110,6 +110,8 @@
         weather:'',
         temp:'',
         endLoc: '',
+        fromChild: '',
+        fromChild2: '',
       };
     },
 
@@ -122,6 +124,12 @@
             }
         },
     methods: {
+      onChildClick (value) {
+      this.fromChild = value
+      },
+      onChildClick2 (value) {
+      this.fromChild2 = value
+      },
       getTrip() {
         const path = 'http://localhost:5000/trips';
         axios.get(path)

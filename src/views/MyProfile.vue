@@ -9,10 +9,10 @@
           <v-flex>
             <v-card flat width=400px>
               <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
-              <v-card-title 
+              <v-card-title
                 style="font-family:Quicksand; font-size:30px;"
-              > My Profile <v-btn icon left><v-icon>edit</v-icon></v-btn>
-              </v-card-title> 
+              > My Profile <router-link to="/editProfile"><v-btn icon left><v-icon>edit</v-icon></v-btn></router-link>
+              </v-card-title>
               <v-divider></v-divider>
               <v-card-text style="font-family:Quicksand; font-size:15px;">
                 <h4 style="font-family:Quicksand; font-size:20px;">John Doe</h4>
@@ -22,10 +22,10 @@
             <v-spacer></v-spacer>
             <v-card flat width=400px>
               <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
-              <v-card-title 
+              <v-card-title
                 style="font-family:Quicksand; font-size:30px;"
               > My Blogs <v-btn icon left><v-icon>edit</v-icon></v-btn>
-              </v-card-title> 
+              </v-card-title>
               <v-divider></v-divider>
               <v-card-text style="font-family:Quicksand; font-size:15px;">
                 <v-card style="font-family:Quicksand; font-size:15px;" width=300px>
@@ -44,10 +44,10 @@
           <v-flex>
             <v-card flat width=600px>
               <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
-              <v-card-title 
+              <v-card-title
                 style="font-family:Quicksand; font-size:30px;"
               > My Trips <v-btn icon left><v-icon>edit</v-icon></v-btn>
-              </v-card-title> 
+              </v-card-title>
               <v-divider></v-divider>
               <v-card-text style="font-family:Quicksand; font-size:15px;">
                 <v-card v-for="trip in trips" style="font-family:Quicksand; font-size:15px;" width=575px>
@@ -57,26 +57,30 @@
                   <v-btn icon left><v-icon>delete</v-icon></v-btn>
                     <v-flex xs3></v-flex>
                     <v-flex xs2>
-                  <v-btn align-end color="info">View trip details</v-btn>
+                  <router-link :to="{ name: 'tripPlanning', params: {trip} }">
+                  <v-btn align-end color="info" v-on:click="sendInfo(trip.start,trip.end)">View trip details</v-btn>
+                  </router-link>
                     </v-flex>
                   <v-spacer></v-spacer>
                   </v-layout>
                 </v-card>
-                
+
               </v-card-text>
             </v-card>
           </v-flex>
         </v-layout>
       </v-container>
-    </div> 
+    </div>
     <Footer />
-  </v-app>   
+  </v-app>
 </template>
 
 <script>
   import sidebar from '@/components/sidebar.vue'
   import Footer from '@/components/Footer.vue'
   import db from '@/fb'
+  import axios from 'axios'
+
   export default {
     name: 'App',
       data() {
@@ -85,11 +89,43 @@
         trips: [],
         databaseNotEmpty: false, // looks at when firebase finishes putting data into the posts array to control when the loading sign shows
         empty: false, // check if there are any blog posts
+        currstart: "",
+        currend: "",
       }
     },
     components: {
       sidebar,
       Footer
+    },
+    methods: {
+      sendInfo(start, end) {
+        const path = 'http://localhost:5000/location';
+        this.currstart = start;
+        this.currend = end;
+        alert(this.currend)
+        axios.post(path,{
+            start: this.currstart,
+            end: this.currend,
+        }
+        )
+        .then(() => {
+          this.$emit('childToParent', origin)
+            this.$emit('childToParent2', dest)
+        })
+        .catch((err) => {
+          console.log(err)
+        });
+      },
+      getCurrLocation(start, end) {
+        this.currstart = start;
+        this.currend = end;
+      },
+      getTrip(start,end) {
+        this.getCurrLocation(start,end);
+        alert(this.currstart)
+        this.sendInfo();
+      
+      },
     },
     created() {
       var tripsRef = db.collection('trips');

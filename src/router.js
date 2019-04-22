@@ -55,6 +55,11 @@ export default new Router({
       component: Ping,
     },
     {
+      path: '/editProfile',
+      name: 'editProfile',
+      component: () => import('./views/EditProfile.vue')
+    },
+    {
       path: '/playlists',
       name: 'playlists',
       component: () => import('./views/Playlists.vue'),
