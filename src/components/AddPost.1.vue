@@ -9,11 +9,11 @@
                 </v-card-title>
                 <v-card-text>
                     <v-form ref="form">
-                        <v-text-field label="Title" v-model="title" prepend-icon="folder" :rules="inputRules"></v-text-field><br>
-                        <!--<v-textarea label="Tell us about your trip" v-model="content" prepend-icon="edit" :rules="inputRules"></v-textarea>-->
+                        <v-text-field label="Title" v-model="title" prepend-icon="folder" :rules="inputRules"></v-text-field>
+                        <v-textarea label="Tell us about your trip" v-model="content" prepend-icon="edit" :rules="inputRules"></v-textarea>
                         <quill-editor :rules="inputRules" id="quill" :options="editorOption" ref="myQuillEditor" v-model="content" />
                         <v-text-field label="Rate the location you visited (optional)" counter="25" :rules="locRules" v-model="rateLoc" prepend-icon="location_on"></v-text-field>
-                       
+                        <br>
                         <v-layout>
                             <v-spacer></v-spacer>
                             <span class="grey--text text--lighten-1 mr-2">({{ rating }})</span>
@@ -39,7 +39,7 @@
                 </v-card-text>
                 </v-card>
            
-                <v-card max width="50%" class="px-5">
+                <v-card width="50%" class="px-5">
                     <br><br>
                     <v-card-title>
                         <h2 style='font-family:Quicksand;'>Preview</h2>
@@ -69,11 +69,12 @@
                             </v-flex>
                         </v-layout>
                         <br>
-                        <div style="word-wrap: break-word;" v-html="compiledHTML"></div>
+                        <div style="word-wrap: break-word;" v-html='compiledHTML'></div>
                     </v-card-text>
                 </v-card>
         </v-layout>
     </v-dialog>
+    
 </template>
 
 <script>
@@ -81,24 +82,6 @@ import 'quill/dist/quill.snow.css'
 import db from '@/fb'
 import { quillEditor } from 'vue-quill-editor'
 var sanitizeHtml = require('sanitize-html');
-
-var toolbarOptions= [
-                        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-                        ['blockquote', 'code-block'],
-                        [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                        [{ 'direction': 'rtl' }],                         // text direction
-
-                        [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-                        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-
-                        [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-                        [{ 'font': [] }],
-                        [{ 'align': [] }],
-
-                        ['clean'],                                         // remove formatting button
-                        ['link', 'video']
-                    ];
 
 export default {
     components: {
@@ -128,11 +111,17 @@ export default {
                 debug: 'info',
                 placeholder: 'Tell us about your trip :)',
                 readOnly: false,
-                theme: 'snow',
-                modules: {
-                    toolbar: toolbarOptions
-                }
-            }
+                theme: 'snow'
+            }/*,
+            cleanContent: sanitizeHtml(this.content, {
+                allowedTags: [ 'h1', 'h2', 'blockquote', 'p', 'a', 'ul', 'ol',
+  'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
+  'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'iframe' ],
+                allowedAttributes: {
+                    'a': [ 'href' ]
+                },
+                allowedIframeHostnames: ['www.youtube.com']
+            })*/
         }
     },
     methods: {
@@ -141,10 +130,9 @@ export default {
                 //use this when we actually put it in the database to show a loading sign
                 this.loading = true; 
                 const newBlogPost = {}
-                // side notee: could try to sanitize all tags to just get the text content
                 if (this.rateLoc === '') {
                     newBlogPost.title = this.title;
-                    newBlogPost.content= this.compiledHTML;
+                    newBlogPost.content= this.content;
                     newBlogPost.date= this.date;
                     newBlogPost.user= this.user;
                     newBlogPost.rating= 0;
@@ -152,7 +140,7 @@ export default {
                       
                 } else {
                     newBlogPost.title= this.title;
-                    newBlogPost.content= this.compiledHTML;
+                    newBlogPost.content= this.content;
                     newBlogPost.date= this.date;
                     newBlogPost.user= this.user;
                     newBlogPost.rating= this.rating;
@@ -183,8 +171,7 @@ export default {
             this.rating = 1;
             this.rateLoc = '';
             this.$refs.form.resetValidation();
-        }
-      /*,
+        }/*,
         convertHTML() {
 
             var justHtmlContent = document.getElementById('justHtml');
@@ -197,49 +184,17 @@ export default {
                 justHtmlContent.innerHTML = justHtml;
                 this.delta*
         
-    }*//*
-        watch: {
-            content() {
-                this.$store.commit('setDelta', this.$refs.myQuillEditor.quill.getContent());
-            }
-        }*/
+    }*/
+              //  this.delta = this.$refs.myQuillEditor.quill.getContent();
+         
     },
     computed: {
         compiledHTML: function() {
-            var clean = sanitizeHtml(this.content, {
-                allowedTags: [ 'p', 'a', 'em', 'strong','u', 'iframe', 'ul', 'ol', 'h1', 'h2','h3', 'h4', 'h5', 'h6', 'blockquote', 's', 'li','class', 'span', 'br'],
-                allowedAttributes: {
-                    a: [ 'href', 'name', 'target'],
-                    p: ['class'],
-                    span: ['class', 'style'],
-                    iframe: ['class', 'frameborder', 'allowfullscreen', 'src'],
-                },
-                allowedClasses: {
-                    'p': ['ql-align-right', 'ql-direction-rtl','ql-align-justify', 'ql-align-center', 'ql-align-right'],
-                    'span': ['ql-size-huge','ql-size-small','ql-size-normal', 'ql-size-large','ql-cursor',
-                             'ql-font-serif','ql-font-monospace'],
-                    'iframe': ['ql-video']
-                },
-                allowedStyles: {
-                    '*': {
-                        // only allow rgb (from the quill toolbar)
-                        'color': [/^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/],
-                        'background-color':[/^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/]
-                    }
-                },
-                allowedIframeHostnames: ['www.youtube.com'],
-                allowedSchemes: ['https'],
-                allowedSchemesByTag: {},
-                allowedSchemesAppliedToAttributes: [ 'href', 'src', 'cite' ],
-                allowProtocolRelative: true,
-                allowIframeRelativeUrls: true,
-                nonTextTags: [ 'style', 'script', 'textarea', 'noscript' ]
-            });
-            return clean
+            return this.content
         }
     }
+    
 }
-
 </script>
 
 <style>
@@ -267,27 +222,18 @@ export default {
     direction: rtl;
 }
 
-.ql-editor {
-    height: 30vh;
-    
-}
-
-#ql-container {
+.ql-container {
     resize: vertical;
     overflow-y: scroll;
     
 }
 
-.q1-editor iframe {
-    position: relative;
-    width: 100%;
-    height: 0;
-    padding-bottom: 200%;
-}
-
-.ql-video {
-    width: 100%; 
-    height: 200%; 
+.ql-syntax {
+    background-color: black;
+    font-family: monospace;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 blockquote {

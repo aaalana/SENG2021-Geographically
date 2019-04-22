@@ -7,7 +7,7 @@
             <v-flex pr-4 xs4 md4 class="grey--text" style="word-wrap: break-word;">Written by {{ post.user }}</v-flex>
             <v-flex xs4 md4 class="grey--text" style="word-wrap: break-word;">Modified on {{ post.date }}</v-flex>
             <v-flex v-if="post.locationRated !== ''">
-            <div class="caption grey--text" style="word-wrap: break-word;"><v-icon small class="mr-1">location_on</v-icon>{{ post.locationRated }}</div>
+            <div xs4 md4 class="caption grey--text" style="word-wrap: break-word;"><v-icon small class="mr-1">location_on</v-icon>{{ post.locationRated }}</div>
                 <v-rating
                 class="ml-3"
                 v-model="post.rating"
@@ -19,11 +19,10 @@
                 readonly
                 size="20"
                 ></v-rating>
-            </v-flexz>
             </v-flex>
         </v-layout>
          <br>
-        <article>{{ post.content }}</article>
+        <div v-html="post.content"></div>
     </v-container>
     </div>
 </template>
