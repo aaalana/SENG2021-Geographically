@@ -3,27 +3,27 @@
     <v-content class="dblayout">
     <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
       <v-layout row>
-        <v-flex xs12>
+        <v-flex xs12 md 8>
           <v-card>
           <h1 style="font-family:Quicksand;padding:30px;font-size:30px">Map Mode</h1>
           <div id = dMap>
           <router-link to="/map">
-            <img id = "dMap" src="../assets/dMap.png" style="padding:30px" height="417px" width="800px">
+            <img id = "dMap" src="../assets/dMap.png" style="padding:30px" height="600px" width="1200px">
           </router-link>
           </div>
           </v-card>
         </v-flex>
         <div style="width:20px"></div>
-        <v-flex xs12>
+        <v-flex xs12 md 4>
           <v-card>
           <h2 style="font-family:Quicksand;padding:30px;font-size:30px">Nearby Attractions</h2>
           <div style="padding:20px">
             <p style="font-family:Quicksand;font-size:20px;text-align:center">Royal Botanical Gardens</p>
-            <img id = "yeet" src="../assets/royalbg.png" style=";display:block;margin:0 auto" height="186px" width="247px">
+            <img src="../assets/royalbg.png" style=";display:block;margin:0 auto" height="186px" width="247px">
           </div>
-          <div style="padding:20px">
+          <div class="mb-5" style="padding:20px">
             <p style="font-family:Quicksand;font-size:20px;text-align:center" >Anzac Memorial</p>
-            <img id = "yeet" src="../assets/anzac.png" style="display:block;margin:0 auto" height="186px" width="247px">
+            <img src="../assets/anzac.png" style="display:block;margin:0 auto" height="186px" width="247px">
           </div>
           </v-card>
         </v-flex>
@@ -40,11 +40,9 @@
                 :src="item['src']"
               ></v-carousel-item>
             </v-carousel>
-          </template>
           </v-card>
         </v-flex>
       </v-layout>
-      <br><br>
     </v-content>
     <Menu />
     <Footer />
@@ -55,6 +53,7 @@
 import Footer from '@/components/Footer.vue'
 import Menu from '@/components/Menu.vue'
 import axios from 'axios';
+
 
 export default {
   name: 'dashboard',
@@ -89,11 +88,16 @@ export default {
             // eslint-disable-next-line
             console.error(error);
           });
+      return
+    },
 
-
-      }
 
   },
+
+  beforeMount() {
+    this.checkAuth()
+  },
+
   created() {
     this.getMessage();
     this.getTripPhoto()

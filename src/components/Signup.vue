@@ -3,7 +3,7 @@
     <v-btn color="normal" style= "font-family:Quicksand" border-radius=0px flat dark right @click="dialog = true">Sign Up</v-btn>
     <v-layout row justify-center style="width:10px;height:10px;">
     <v-dialog v-model="dialog" dark no-click-animation persistent max-width="600px">
-  
+
     <v-card>
       <v-form ref="form">
       <v-card-title>
@@ -26,9 +26,9 @@
             </v-flex>
             <small>*indicates required field</small>
           </v-layout>
-        </v-container> 
-      </v-card-text>   
-      
+        </v-container>
+      </v-card-text>
+
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="blue darken-1" style="min-width:100px;min-height:50px;" flat @click="dialog=false">Close</v-btn>
@@ -47,7 +47,7 @@ import auth from '@/fb'
 import firebase from 'firebase'
 
 export default {
-    data() { 
+    data() {
       return {
         user: '',
         email:'',
@@ -67,13 +67,19 @@ export default {
             const newUser = {
               id: user.uid,
               username: this.user,
+              address: '',
               registeredBlogPosts: []
             }
+
+            return user.updateProfile ({
+              displayName: document.getElementById(this.user).value
+            })
+
             this.success = true;
             alert('Account created for ' + this.email);
             this.$router.push('/dashboard');
             console.log("Sign up was successful!");
-        
+
           })
           .catch(error => {
            // Handle Errors here.
