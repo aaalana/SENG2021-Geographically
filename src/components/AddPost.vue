@@ -10,7 +10,7 @@
                 <v-card-text>
                     <v-form ref="form">
                         <v-text-field label="Title" v-model="title" prepend-icon="folder" :rules="inputRules"></v-text-field><br>
-                        <!--<v-textarea v-show=false label="Tell us about your trip" v-model="content" prepend-icon="edit" :rules="inputRules"></v-textarea>-->
+                        <v-textarea v-show=false label="Tell us about your trip" v-model="content" prepend-icon="edit" :rules="inputRules"></v-textarea>
                         <quill-editor id="quill" :options="editorOption" ref="myQuillEditor" v-model="content" @input="isQuillEmpty"/>
                         <v-flex v-model= "contentError" v-if="contentError === true" style="border-top-style: solid; border-width: thin; padding-top:5px; font-size:13px; color:red;">This field cannot be empty</v-flex>
 
