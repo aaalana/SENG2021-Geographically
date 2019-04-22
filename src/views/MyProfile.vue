@@ -42,7 +42,7 @@
             </v-card>
           </v-flex>
           <v-flex>
-            <v-card flat width=400px>
+            <v-card flat width=600px>
               <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
               <v-card-title 
                 style="font-family:Quicksand; font-size:30px;"
@@ -50,15 +50,16 @@
               </v-card-title> 
               <v-divider></v-divider>
               <v-card-text style="font-family:Quicksand; font-size:15px;">
-                <v-card style="font-family:Quicksand; font-size:15px;" width=300px>
-                  <v-icon medium>navigation</v-icon>Katoomba<v-btn icon left><v-icon>delete</v-icon></v-btn>
+                <v-card v-for="trip in trips" style="font-family:Quicksand; font-size:15px;" width=575px>
+                  <v-icon medium>navigation</v-icon>{{trip.start}} TO {{trip.end}}
                   <v-spacer></v-spacer>
-                  <v-layout align-center>
+                  <v-layout align-end>
+                  <v-btn icon left><v-icon>delete</v-icon></v-btn>
                     <v-flex xs3></v-flex>
                     <v-flex xs2>
-                  <v-btn align-center color="info">View trip details</v-btn>
+                  <v-btn align-end color="info">View trip details</v-btn>
                     </v-flex>
-
+                  <v-spacer></v-spacer>
                   </v-layout>
                 </v-card>
                 
@@ -75,17 +76,36 @@
 <script>
   import sidebar from '@/components/sidebar.vue'
   import Footer from '@/components/Footer.vue'
-
+  import db from '@/fb'
   export default {
     name: 'App',
-    return() {
-      data: {
-        message: false
+      data() {
+        return {
+        message: false,
+        trips: [],
+        databaseNotEmpty: false, // looks at when firebase finishes putting data into the posts array to control when the loading sign shows
+        empty: false, // check if there are any blog posts
       }
     },
     components: {
       sidebar,
       Footer
-    }
+    },
+    created() {
+      var tripsRef = db.collection('trips');
+      var allTrips = tripsRef.get()
+        .then(snapshot => {
+          snapshot.forEach(doc => {
+            this.trips.push({id: doc.id, ...doc.data()});
+            //alert(doc.id, '=>', doc.data());
+          });
+        })
+        .catch(err => {
+          console.log('Error getting documents', err);
+        });
+        
+    },
 }
 </script>
+
+

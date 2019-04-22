@@ -40,7 +40,7 @@
               <v-layout row wrap>
                 <v-flex xs7></v-flex>
                 <v-flex xs5 order-lg2>
-                  <v-btn flat @click="reloadPage()" ><v-icon>save</v-icon>Save trip</v-btn>
+                  <v-btn flat @click="saveTrip()" ><v-icon>save</v-icon>Save trip</v-btn>
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -57,7 +57,12 @@
                 <br>
                 WEATHER<br> {{weather}} {{temp}} degrees
                 <!--11&#0176;C--><br>
-                MY TRIP PLAYLIST<br><v-divider></v-divider> 
+                MY TRIP PLAYLIST<br>
+                <router-link :to="{ name: 'playlists', params: { endLoc } }">
+                  Get a playlist
+                </router-link>
+                <br>
+                <v-divider></v-divider> 
                 <img :src=photo class=”cropimg”>
                 <br>
                 {{summary}}
@@ -80,16 +85,12 @@
   import randomMap from '@/components/randomMap.vue'
   import axios from 'axios';
   import Footer from '@/components/Footer.vue'
+  import db from '@/fb'
   //import VueGoogleAutocomplete from 'vue-google-autocomplete'
 
   export default {
-    name: 'App',
-    props: {
-      loc: {
-      type: String,
-      required: false
-    },
-    },
+    name: 'tripPlanning',
+    props: ["loc"],
     components: {
       sidebar,
       timeline,
@@ -107,7 +108,8 @@
         arrtime: '',
         address:'',
         weather:'',
-        temp:''
+        temp:'',
+        endLoc: '',
       };
     },
 
@@ -115,6 +117,9 @@
             // To demonstrate functionality of exposed component functions
             // Here we make focus on the user input
             this.$refs.address.focus();
+            if (this.loc) {
+              this.msg["end"] = this.loc    
+            }
         },
     methods: {
       getTrip() {
@@ -122,6 +127,7 @@
         axios.get(path)
           .then((res) => {
             this.msg = res.data; 
+            this.endLoc = res.data["end"];
           })
           .catch((error) => {
             // eslint-disable-next-line
@@ -172,6 +178,22 @@
       },
       reloadPage(){
         window.location.reload()
+      },
+
+      saveTrip() {
+        
+        const newTrip = {
+            start: this.msg["start"],
+            end: this.msg["end"]
+        }
+        
+        // add to firebase
+        db.collection('trips').add(newTrip).then(() => {
+            alert('trip added successfully');
+        })
+        .catch(error => {
+            console.log(error);
+        })
       },
   },
 

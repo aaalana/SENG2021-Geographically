@@ -57,7 +57,8 @@ export default new Router({
     {
       path: '/playlists',
       name: 'playlists',
-      component: () => import('./views/Playlists.vue')
+      component: () => import('./views/Playlists.vue'),
+      props: true,
     },
     {
       path: '/blog/:id',
