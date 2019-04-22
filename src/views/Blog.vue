@@ -208,10 +208,11 @@ export default {
                     // push to the posts array 
                     this.databaseNotEmpty = true,
                     this.empty = false,
-                    this.posts.push({
+                    this.posts.unshift({
                         ...change.doc.data(),
                         id: change.doc.id,
                     })
+                    this.posts.sort((a,b) => a.date > b.date ? -1 : 1);
                 }
             })
             // if nothing has been modified/added to the database, there are no blog posts

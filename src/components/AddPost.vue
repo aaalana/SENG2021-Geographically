@@ -9,12 +9,12 @@
                 </v-card-title>
                 <v-card-text>
                     <v-form ref="form">
-                        <v-text-field label="Title" v-model="title" prepend-icon="folder" :rules="inputRules"></v-text-field><br>
-                        <v-textarea v-show=false label="Tell us about your trip" v-model="content" prepend-icon="edit" :rules="inputRules"></v-textarea>
+                        <v-text-field counter="20" label="Title" v-model="title" prepend-icon="folder" :rules="[rules.empty, rules.max2]"></v-text-field><br>
+                        <v-textarea v-show=false label="Tell us about your trip" v-model="content" prepend-icon="edit" :rules="rules.empty"></v-textarea>
                         <quill-editor id="quill" :options="editorOption" ref="myQuillEditor" v-model="content" @input="isQuillEmpty"/>
                         <v-flex v-model= "contentError" v-if="contentError === true" style="border-top-style: solid; border-width: thin; padding-top:5px; font-size:13px; color:red;">This field cannot be empty</v-flex>
 
-                        <v-text-field label="Rate the location you visited (optional)" counter="25" :rules="locRules" v-model="rateLoc" prepend-icon="location_on"></v-text-field>
+                        <v-text-field label="Rate the location you visited (optional)" counter="25" :rules="rules.max" v-model="rateLoc" prepend-icon="location_on"></v-text-field>
                        
                         <v-layout>
                             <v-spacer></v-spacer>
@@ -112,10 +112,11 @@ export default {
             content: '',
             //date: new Date().toDateString() - puts date in words
             date: new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('T')[0],
-            inputRules: [
-                v => v.trim() !== '' || 'This field cannot be empty'
-            ],
-            locRules: [v => v.length <= 25 || 'Max 25 characters'],
+            rules: {
+                empty: v => v.trim() !== '' || 'This field cannot be empty',
+                max: v => v.length <= 25 || 'Max 25 characters',
+                max2: v => v.length <= 25 || 'Max 20 characters'
+            },
             // controls when the loading sign appears on the button
             loading: false,
             // closes the add post window/pop up
@@ -229,7 +230,6 @@ export default {
                     }
                 },
                 allowedIframeHostnames: ['www.youtube.com'],
-                allowedSchemes: ['https'],
                 allowedSchemesByTag: {},
                 allowedSchemesAppliedToAttributes: [ 'href', 'src', 'cite' ],
                 allowProtocolRelative: true,

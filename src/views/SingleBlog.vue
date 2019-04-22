@@ -39,8 +39,6 @@ export default {
     },
     created() {
         db.collection('posts').doc(this.id).get().then(doc => {
-            // snapshot.doc = all docs from database
-            // forEach = looping through docs
             this.post = doc.data();
             console.log(doc.data())
         });
