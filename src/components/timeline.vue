@@ -56,6 +56,10 @@
 <script>
 import axios from 'axios';
 export default {
+    name: 'timeline',
+    props: {
+    parentData: Object,
+  },
     data() {
         return {
             location: {
