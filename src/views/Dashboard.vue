@@ -54,6 +54,7 @@ import Footer from '@/components/Footer.vue'
 import Menu from '@/components/Menu.vue'
 import axios from 'axios';
 
+import firebase from 'firebase'
 
 export default {
   name: 'dashboard',
@@ -90,12 +91,16 @@ export default {
           });
       return
     },
-
+    checkAuth() {
+      firebase.auth().onAuthStateChanges(user).then(user => {
+        console.log(user);
+      })
+    }
 
   },
 
   beforeMount() {
-    this.checkAuth()
+    this.checkAuth(user);
   },
 
   created() {
