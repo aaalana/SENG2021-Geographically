@@ -94,7 +94,7 @@ export default {
         const path = 'http://localhost:5000/location';
         axios.post(path,{
             start: "Anzac Parade, Kensington",
-            end: "Royal Botanical Gardens",
+            end: "Sydney Royal Botanical Gardens",
         }
         )
         .then(() => {
