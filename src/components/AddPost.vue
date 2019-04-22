@@ -216,7 +216,7 @@ export default {
                 },
                 allowedClasses: {
                     'p': ['ql-align-right', 'ql-direction-rtl','ql-align-justify', 'ql-align-center', 'ql-align-right'],
-                    'span': ['ql-size-huge','ql-size-small','ql-size-normal', 'ql-size-large','ql-cursor',
+                    'span': ['ql-size-huge','ql-size-small', 'ql-size-large','ql-cursor',
                              'ql-font-serif','ql-font-monospace'],
                     'iframe': ['ql-video']
                 },
@@ -243,6 +243,18 @@ export default {
 </script>
 
 <style>
+.ql-size-small {
+    font-size: small;
+}
+
+.ql-size-large {
+    font-size: large;
+}
+
+.ql-size-huge {
+    font-size: x-large;
+}
+
 .ql-font-serif {
     font-family: serif;
 }

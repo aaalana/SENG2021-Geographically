@@ -10,7 +10,7 @@
                 <v-card-text>
                     <v-form ref="form">
                         <v-text-field label="Title" v-model="editedTitle" prepend-icon="folder" :rules="inputRules"></v-text-field>
-                        <v-textarea label="Tell us about your trip" v-model="editedContent" prepend-icon="edit" :rules="inputRules"></v-textarea>
+                        <!--<v-textarea label="Tell us about your trip" v-model="editedContent" prepend-icon="edit" :rules="inputRules"></v-textarea>-->
                         <quill-editor :rules="inputRules" id="quill" :options="editorOption" ref="myQuillEditor" v-model="editedContent" />
                         <v-text-field label="Rate the location you visited (optional)" counter="25" :rules="locRules" v-model="rateLoc" prepend-icon="location_on"></v-text-field>
                         <br>
@@ -216,7 +216,7 @@ export default {
                 },
                 allowedClasses: {
                     'p': ['ql-align-right', 'ql-direction-rtl','ql-align-justify', 'ql-align-center', 'ql-align-right'],
-                    'span': ['ql-size-huge','ql-size-small','ql-size-normal', 'ql-size-large','ql-cursor',
+                    'span': ['ql-size-huge','ql-size-small', 'ql-size-large','ql-cursor',
                              'ql-font-serif','ql-font-monospace'],
                     'iframe': ['ql-video']
                 },
@@ -242,6 +242,18 @@ export default {
 </script>
 
 <style>
+.ql-size-small {
+    font-size: small;
+}
+
+.ql-size-large {
+    font-size: large;
+}
+
+.ql-size-huge {
+    font-size: x-large;
+}
+
 .ql-font-serif {
     font-family: serif;
 }
