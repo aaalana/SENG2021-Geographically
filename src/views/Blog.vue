@@ -16,13 +16,12 @@
         </nav>
         <v-content>
             <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
-         
-                <v-flex mb-4>
-                    <h1 class="display-2 font-weight-bold mb-3">
-                        <br>My Blog
-                    </h1>
-                    <h1 class="display-1 font-weight-bold mb-3">
-                        <br>Posts
+                <v-flex mb-4 style="font-family:Quicksand;">
+                    <br><br><br><b><h1 class=" mb-3" style="font-size: 40px">
+                        My Blog
+                    </h1></b>
+                    <h1 class="mb-3">
+                         Posts
                     </h1>
                     <AddPost @blogPostAdded="snackbar = true" />
                 </v-flex>
@@ -54,6 +53,7 @@
                     </v-layout>
                 </v-container>
 
+            <!--loading sign when page first renders and posts array is being filled in-->
             <v-layout row wrap v-if="databaseNotEmpty === false && stopLoading === false">
                   <div v-if="empty === true"><h3 class= "font-weight-regular">You have no blog posts.</h3></div>  
                 <v-flex xs12 class="text-xs-center">
@@ -64,7 +64,7 @@
                 </v-flex>
             </v-layout>
             <div class='text-xs-center' v-if="empty === true"><h3 class= "font-weight-regular">You have no blog posts.</h3></div> 
-            <div class='text-xs-center' v-if="noSearchResults() === true && databaseNotEmpty === true">
+            <div class='text-xs-center' v-if="noSearchResults() === true && databaseNotEmpty === true && empty == false && search !== ''">
                 <h3 class= "font-weight-regular">Sorry! We couldn't find what you were looking for.</h3>
                 <v-icon large>sentiment_very_dissatisfied</v-icon>
             </div> 
@@ -191,8 +191,10 @@ export default {
             if (prop === 'title') {
                 this.posts.sort((a,b) => a[prop] < b[prop] ? -1 : 1);
             } else if (prop === 'date') {
+                // most recent date
                 this.posts.sort((a,b) => a.date > b.date ? -1 : 1);
             } else {
+                // oldest date
                 this.posts.sort((a,b) => a.date < b.date ? -1 : 1);
             }
         }
@@ -206,10 +208,11 @@ export default {
                     // push to the posts array 
                     this.databaseNotEmpty = true,
                     this.empty = false,
-                    this.posts.push({
+                    this.posts.unshift({
                         ...change.doc.data(),
                         id: change.doc.id,
                     })
+                    this.posts.sort((a,b) => a.date > b.date ? -1 : 1);
                 }
             })
             // if nothing has been modified/added to the database, there are no blog posts
