@@ -91,16 +91,22 @@ export default {
           });
       return
     },
-    checkAuth() {
-      firebase.auth().onAuthStateChanges(user).then(user => {
-        console.log(user);
+    checkAuth: function() {
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          console.log(user);
+          this.$router.push({ path: '/dashboard' })
+        } else {
+          console.log(user);
+          this.$router.push({ path: '/' })
+        }
       })
     }
 
   },
 
-  beforeMount() {
-    this.checkAuth(user);
+  mounted: {
+    // this.checkAuth(this.user);
   },
 
   created() {
