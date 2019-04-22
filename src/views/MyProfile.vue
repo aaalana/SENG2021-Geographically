@@ -54,7 +54,7 @@
                   <v-icon medium>navigation</v-icon>{{trip.start}} TO {{trip.end}}
                   <v-spacer></v-spacer>
                   <v-layout align-end>
-                  <v-btn icon left><v-icon>delete</v-icon></v-btn>
+                  <v-btn icon left  @click="deleteTrip(trip)"><v-icon>delete</v-icon></v-btn>
                     <v-flex xs3></v-flex>
                     <v-flex xs2>
                   <router-link :to="{ name: 'tripPlanning', params: {trip} }">
@@ -126,6 +126,29 @@
         this.sendInfo();
       
       },
+      deleteTrip(trip) {
+            // delete post from the database
+            db.collection('trips').doc(trip.id).delete().then(function() {
+                console.log("Trip successfully deleted!");
+            }).catch(function(error) {
+                console.error("Error removing trip: ", error);
+            });
+            
+            // delete post from the post array that shows the posts list on the webpage
+            let index
+            for (let i = 0; i < this.trips.length; i++) {
+                if (trip.id === this.trips[i].id) {
+                    index = i
+                    break
+                }
+            }
+            this.trips.splice(index, 1)
+
+            // trigger empty blog posts message 
+            if (this.trips.length === 0) {
+                this.empty = true;
+            }
+        },
     },
     created() {
       var tripsRef = db.collection('trips');
