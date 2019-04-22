@@ -291,13 +291,6 @@ export default {
     
 }
 
-.q1-editor iframe {
-    position: relative;
-    width: 100%;
-    height: 0;
-    padding-bottom: 200%;
-}
-
 blockquote {
   display: block;
   margin-top: 1em;
