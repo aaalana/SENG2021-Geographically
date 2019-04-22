@@ -1,6 +1,6 @@
 <template>
     <v-dialog persistent no-click-animation max width="100%" v-model="dialog">
-        <v-btn round style="border-radius:7px;" slot="activator" class="info"><b>Add new post</b></v-btn>
+        <v-btn round style="border-radius:7px;" slot="activator" class="info" @click="turnOffErrorChecking"><b>Add new post</b></v-btn>
             <v-layout row wrap>
             <v-card max width="50%" class="px-5">
                 <br><br>
@@ -10,7 +10,7 @@
                 <v-card-text>
                     <v-form ref="form">
                         <v-text-field label="Title" v-model="title" prepend-icon="folder" :rules="inputRules"></v-text-field><br>
-                        <!--<v-textarea label="Tell us about your trip" v-model="content" prepend-icon="edit" :rules="inputRules"></v-textarea>-->
+                        <!--<v-textarea v-show=false label="Tell us about your trip" v-model="content" prepend-icon="edit" :rules="inputRules"></v-textarea>-->
                         <quill-editor id="quill" :options="editorOption" ref="myQuillEditor" v-model="content" @input="isQuillEmpty"/>
                         <v-flex v-model= "contentError" v-if="contentError === true" style="border-top-style: solid; border-width: thin; padding-top:5px; font-size:13px; color:red;">This field cannot be empty</v-flex>
 
@@ -135,11 +135,13 @@ export default {
                 modules: {
                     toolbar: toolbarOptions
                 }
-            }
+            },
+            cancel: false
         }
     },
     methods: {
         publish() {
+            this.isQuillEmpty();
             if(this.$refs.form.validate() && this.contentError === false) {
                 //use this when we actually put it in the database to show a loading sign
                 this.loading = true; 
@@ -180,22 +182,27 @@ export default {
         // reset the text field 
         reset() {
             this.dialog = false; 
+            this.cancel = true;
             //this.$refs.form.reset(this.title, this.content) resets everything
             this.title = '';
             this.content = '';
+            this.contentError = false;
             this.rating = 1;
             this.rateLoc = '';
-            this.contentError = false;
             this.$refs.form.resetValidation();
         },
         isQuillEmpty() {
-            if (this.$refs.myQuillEditor.quill.getText().trim().length === 0 && 
+            if (this.cancel === false && this.$refs.myQuillEditor.quill.getText().trim().length === 0 && 
                 this.$refs.myQuillEditor.quill.container.firstChild.innerHTML.includes("img") === false &&
                 this.$refs.myQuillEditor.quill.container.firstChild.innerHTML.includes("iframe") === false) {
                     return this.contentError = true;
             } else {
                     return this.contentError = false;
             }
+        },
+        turnOffErrorChecking() {
+            this.contentError = false;
+            this.cancel = false;
         }
     },
     computed: {
