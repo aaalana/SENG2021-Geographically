@@ -204,9 +204,6 @@
         })
       },
   },
-
-      
-      
       created() {
         this.getTripWeather();
         this.getTripPhoto();
