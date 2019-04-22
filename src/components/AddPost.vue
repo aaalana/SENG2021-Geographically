@@ -11,7 +11,9 @@
                     <v-form ref="form">
                         <v-text-field label="Title" v-model="title" prepend-icon="folder" :rules="inputRules"></v-text-field><br>
                         <!--<v-textarea label="Tell us about your trip" v-model="content" prepend-icon="edit" :rules="inputRules"></v-textarea>-->
-                        <quill-editor :rules="inputRules" id="quill" :options="editorOption" ref="myQuillEditor" v-model="content" />
+                        <quill-editor id="quill" :options="editorOption" ref="myQuillEditor" v-model="content" @input="isQuillEmpty"/>
+                        <v-flex v-model= "contentError" v-if="contentError === true" style="border-top-style: solid; border-width: thin; padding-top:5px; font-size:13px; color:red;">This field cannot be empty</v-flex>
+
                         <v-text-field label="Rate the location you visited (optional)" counter="25" :rules="locRules" v-model="rateLoc" prepend-icon="location_on"></v-text-field>
                        
                         <v-layout>
@@ -111,7 +113,7 @@ export default {
             //date: new Date().toDateString() - puts date in words
             date: new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('T')[0],
             inputRules: [
-                v => v.trim() !== '' || 'You cannot leave this empty'
+                v => v.trim() !== '' || 'This field cannot be empty'
             ],
             locRules: [v => v.length <= 25 || 'Max 25 characters'],
             // controls when the loading sign appears on the button
@@ -123,6 +125,7 @@ export default {
             // hard-coded user - change later
             user: 'Tom',
             rating: 1,
+            contentError: false,
             rateLoc: '',
             editorOption: {
                 debug: 'info',
@@ -137,7 +140,7 @@ export default {
     },
     methods: {
         publish() {
-            if(this.$refs.form.validate()) {
+            if(this.$refs.form.validate() && this.contentError === false) {
                 //use this when we actually put it in the database to show a loading sign
                 this.loading = true; 
                 const newBlogPost = {}
@@ -182,27 +185,18 @@ export default {
             this.content = '';
             this.rating = 1;
             this.rateLoc = '';
+            this.contentError = false;
             this.$refs.form.resetValidation();
-        }
-      /*,
-        convertHTML() {
-
-            var justHtmlContent = document.getElementById('justHtml');
-
-                var delta = editor.getContents();
-                //var text = editor.getText();
-                var justHtml = editor.root.innerHTML;
-                //preciousContent.innerHTML = JSON.stringify(delta);
-                //justTextContent.innerHTML = text;
-                justHtmlContent.innerHTML = justHtml;
-                this.delta*
-        
-    }*//*
-        watch: {
-            content() {
-                this.$store.commit('setDelta', this.$refs.myQuillEditor.quill.getContent());
+        },
+        isQuillEmpty() {
+            if (this.$refs.myQuillEditor.quill.getText().trim().length === 0 && 
+                this.$refs.myQuillEditor.quill.container.firstChild.innerHTML.includes("img") === false &&
+                this.$refs.myQuillEditor.quill.container.firstChild.innerHTML.includes("iframe") === false) {
+                    return this.contentError = true;
+            } else {
+                    return this.contentError = false;
             }
-        }*/
+        }
     },
     computed: {
         compiledHTML: function() {
@@ -295,11 +289,6 @@ export default {
     width: 100%;
     height: 0;
     padding-bottom: 200%;
-}
-
-.ql-video {
-    width: 100%; 
-    height: 200%; 
 }
 
 blockquote {

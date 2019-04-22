@@ -9,9 +9,11 @@
                 </v-card-title>
                 <v-card-text>
                     <v-form ref="form">
-                        <v-text-field label="Title" v-model="editedTitle" prepend-icon="folder" :rules="inputRules"></v-text-field>
+                        <v-text-field label="Title" v-model="editedTitle" prepend-icon="folder" :rules="inputRules"></v-text-field><br>
                         <!--<v-textarea label="Tell us about your trip" v-model="editedContent" prepend-icon="edit" :rules="inputRules"></v-textarea>-->
-                        <quill-editor :rules="inputRules" id="quill" :options="editorOption" ref="myQuillEditor" v-model="editedContent" />
+                        <quill-editor id="quill" :options="editorOption" ref="myQuillEditor" v-model="editedContent" @input="isQuillEmpty"/>
+                        <v-flex v-model= "contentError" v-if="contentError === true" style="border-top-style: solid; border-width: thin; padding-top:5px; font-size:13px; color:red;">This field cannot be empty</v-flex>
+
                         <v-text-field label="Rate the location you visited (optional)" counter="25" :rules="locRules" v-model="rateLoc" prepend-icon="location_on"></v-text-field>
                         <br>
                         <v-layout>
@@ -113,7 +115,7 @@ export default {
             editedContent: this.post.content,
             date: new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('T')[0],
             inputRules: [
-                v => v.trim() !== '' || 'You cannot leave this empty'
+                v => v.trim() !== '' || 'This field cannot be empty'
             ],
             locRules: [v => v.length <= 25 || 'Max 25 characters'],
             loading: false, // controls when the loading sign appears on the button
@@ -123,6 +125,7 @@ export default {
             rating: this.post.rating,
             rateLoc: this.post.locationRated,
             hasupdated: false,
+            contentError: false,
             editorOption: {
                 debug: 'info',
                 placeholder: 'Tell us about your trip :)',
@@ -136,7 +139,7 @@ export default {
     },
     methods: {
         publish() {
-            if(this.$refs.form.validate() && this.madeChanges() === true) {
+            if(this.$refs.form.validate() && this.madeChanges() === true && this.contentError === false) {
                 //use this when we actually put it in the database to show a loading sign
                 this.loading = true; 
                
@@ -189,7 +192,8 @@ export default {
             this.editedTitle = this.post.title,
             this.editedContent = this.post.content,
             this.rating= this.post.rating,
-            this.rateLoc= this.post.locationRated
+            this.rateLoc= this.post.locationRated,
+            this.contentError = false
         },
         // check if any changes when editing the blog post was made
         madeChanges() {
@@ -201,6 +205,15 @@ export default {
                     return false;
             } else {
                 return true;
+            }
+        },
+        isQuillEmpty() {
+            if (this.$refs.myQuillEditor.quill.getText().trim().length === 0 && 
+                this.$refs.myQuillEditor.quill.container.firstChild.innerHTML.includes("img") === false &&
+                this.$refs.myQuillEditor.quill.container.firstChild.innerHTML.includes("iframe") === false) {
+                    return this.contentError = true;
+            } else {
+                    return this.contentError = false;
             }
         }
     },
