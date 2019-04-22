@@ -55,7 +55,8 @@
                 <br>
                 APPROXIMATE TRIP TIME<br> {{msg["time"]}}
                 <br>
-                WEATHER<br> {{weather}} {{temp}} degrees
+                WEATHER<br>
+                {{weather}} {{temp}} degrees
                 <!--11&#0176;C--><br>
                 MY TRIP PLAYLIST<br>
                 <router-link :to="{ name: 'playlists', params: { endLoc } }">
@@ -107,7 +108,7 @@
         deptime: '',
         arrtime: '',
         address:'',
-        weather:'',
+        weather:'24',
         temp:'',
         endLoc: '',
         fromChild: '',

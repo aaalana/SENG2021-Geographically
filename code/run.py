@@ -116,7 +116,7 @@ class LocWeather(Resource):
 
 class Spotify(Resource):
     def get(self):
-        music = Music.searchPlaylist()
+        music = Music.searchPlaylist(route[0]['end'])
         print(music)
         return music
 

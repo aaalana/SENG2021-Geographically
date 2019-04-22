@@ -100,7 +100,7 @@ class Music(Resource):
         else:
             print("Can't get token for", username)
 
-    def searchPlaylist():
+    def searchPlaylist(location):
         scope = 'user-read-private'
         #need to prompt user to get username
         username = '22stxr3b7ebjtbaziyqo2f4uq'
@@ -108,10 +108,10 @@ class Music(Resource):
 
         sp = spotipy.Spotify(auth=token)
 
-        results = sp.search(q="Road Trip", type="playlist", limit=10)
+        results = sp.search(q=location, type="playlist", limit=10)
         for i, t in enumerate(results['playlists']['items']):
             print (' ', i, t['external_urls']['spotify'])
 
         return results
 
-Music.searchPlaylist()
+Music.searchPlaylist("Sydney")
