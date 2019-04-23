@@ -1,4 +1,5 @@
 <template>
+  
   <v-footer id="core-footer" absolute height="60">
     <v-layout justify-center row wrap>
       <span v-for="link in links" :key="link.name" color="black">

@@ -11,7 +11,7 @@
               <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
               <v-card-title
                 style="font-family:Quicksand; font-size:30px;"
-              > My Profile <router-link to="/editProfile"><v-btn icon left><v-icon>edit</v-icon></v-btn></router-link>
+              > My Profile <router-link to="/editProfile"><v-btn icon left><v-icon>event</v-icon></v-btn></router-link>
               </v-card-title>
               <v-divider></v-divider>
               <v-card-text style="font-family:Quicksand; font-size:15px;">
@@ -45,10 +45,14 @@
           <v-flex>
             <v-card flat width=600px>
               <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
+              <v-layout row wrap>
               <v-card-title
                 style="font-family:Quicksand; font-size:30px;"
-              > My Trips <v-btn icon left><v-icon>edit</v-icon></v-btn>
+              > My Trips 
+              <v-divider></v-divider>
+              <v-flex><v-btn flat to="/"><v-icon>event_planner</v-icon>start planning</v-btn></v-flex>
               </v-card-title>
+              </v-layout>
               <v-divider></v-divider>
               <v-card-text style="font-family:Quicksand; font-size:15px;">
                 <v-card v-for="trip in trips" style="font-family:Quicksand; font-size:15px;" width=575px>

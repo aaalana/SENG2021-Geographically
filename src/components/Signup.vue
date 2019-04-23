@@ -70,10 +70,10 @@ export default {
               address: '',
               registeredBlogPosts: []
             }
-
+            /*
             return user.updateProfile ({
               displayName: document.getElementById(this.user).value
-            })
+            })*/
 
             this.success = true;
             alert('Account created for ' + this.email);
@@ -86,7 +86,7 @@ export default {
             var errorCode = error.code;
             var errorMessage = error.message;
             if (errorCode === 'auth/weak-password') {
-              alert('The password is too weak.');
+              alert('The password is too weak. Please make a password that is at least 6 characters long.');
             } else if (errorCode === 'auth/email-already-in-use') {
               alert('The email is already in use')
             } else if(errorCode === 'auth/invalid-email') {

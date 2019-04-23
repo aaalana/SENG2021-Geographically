@@ -37,21 +37,18 @@
       </div>
     </div>
     <Menu />
-    <Footer />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import Menu from '@/components/Menu.vue'
-import Footer from '@/components/Footer.vue'
 import axios from 'axios'
 
 export default {
   name: 'map',
   components: {
-    Menu,
-    Footer
+    Menu
   },
   data() {
     return {
@@ -63,8 +60,7 @@ export default {
     submit:function() {
       this.url = "https://maps.google.com/maps?q="+this.location+"&t=&z=13&ie=UTF8&iwloc=&output=embed"
     },
-  },
-
+  }
 };
 </script>
 

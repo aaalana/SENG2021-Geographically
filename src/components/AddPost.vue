@@ -123,8 +123,7 @@ export default {
             dialog: false,
             // array of blog posts
             posts: [],
-            // hard-coded user - change later
-            user: 'Tom',
+            user: 'John',
             rating: 1,
             contentError: false,
             rateLoc: '',
