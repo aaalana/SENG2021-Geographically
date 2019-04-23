@@ -228,7 +228,7 @@ export default {
         // search function
         filteredBlogs: function() {
             return this.posts.filter((post) => {
-                return post.title.match(this.search);
+                return post.title.toLowerCase().match(this.search.toLowerCase());
             });
         }
     }
