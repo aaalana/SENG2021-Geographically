@@ -70,10 +70,10 @@ export default {
               address: '',
               registeredBlogPosts: []
             }
-
+            /*
             return user.updateProfile ({
               displayName: document.getElementById(this.user).value
-            })
+            })*/
 
             this.success = true;
             alert('Account created for ' + this.email);
