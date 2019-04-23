@@ -1,10 +1,10 @@
 <template>
-  <div class="dasboard">
+  <div class="dasboard" style="background-color:white;">
     <v-content class="dblayout">
     <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
       <v-layout row>
         <v-flex xs12 md 8>
-          <v-card>
+          <v-card flat>
           <h1 style="font-family:Quicksand;padding:30px;font-size:30px">Map Mode</h1>
           <div id = dMap>
           <router-link to="/map">
@@ -15,7 +15,7 @@
         </v-flex>
         <div style="width:20px"></div>
         <v-flex xs12 md 4>
-          <v-card>
+          <v-card flat>
           <h2 style="font-family:Quicksand;padding:30px;font-size:30px">Nearby Attractions</h2>
           <div style="padding:20px">
             <p style="font-family:Quicksand;font-size:20px;text-align:center">Royal Botanical Gardens</p>
@@ -35,7 +35,7 @@
 
       <v-layout class="mt-5" row>
         <v-flex xs12>
-          <v-card>
+          <v-card flat>
           <h3 style="font-family:Quicksand;padding:30px;font-size:30px">Road Trip!</h3>
             <v-carousel style="width:90%">
             <router-link to="/tripPlanning">
