@@ -48,7 +48,7 @@
               <v-layout row wrap>
               <v-card-title
               style="font-family:Quicksand; font-size:30px;"
-              > My trips <v-btn flat left to="blog"><v-icon style="padding-right:5px;">control_point</v-icon>Start planning</v-btn>
+              > My trips <v-btn flat left to="/tripPlanning"><v-icon style="padding-right:5px;">control_point</v-icon>Start planning</v-btn>
               </v-card-title> 
               </v-layout>
               <v-divider></v-divider>
