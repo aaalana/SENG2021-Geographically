@@ -15,7 +15,7 @@
               </v-card-title>
               <v-divider></v-divider>
               <v-card-text style="font-family:Quicksand; font-size:15px;">
-                <h4 style="font-family:Quicksand; font-size:20px;">John Doe</h4>
+                <h4 style="font-family:Quicksand; font-size:20px;">John</h4>
                 <v-icon medium>place</v-icon>1 Main Street, Sydney 2000
               </v-card-text>
             </v-card>
@@ -47,23 +47,21 @@
               <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
               <v-layout row wrap>
               <v-card-title
-                style="font-family:Quicksand; font-size:30px;"
-              > My Trips 
-              <v-divider></v-divider>
-              <v-flex><v-btn flat to="/"><v-icon>event_planner</v-icon>start planning</v-btn></v-flex>
-              </v-card-title>
+              style="font-family:Quicksand; font-size:30px;"
+              > My trips <v-btn flat left to="blog"><v-icon style="padding-right:5px;">control_point</v-icon>Start planning</v-btn>
+              </v-card-title> 
               </v-layout>
               <v-divider></v-divider>
               <v-card-text style="font-family:Quicksand; font-size:15px;">
-                <v-card v-for="trip in trips" style="font-family:Quicksand; font-size:15px;" width=575px>
+                <v-card class="my-3" v-for="trip in trips" style="font-family:Quicksand; font-size:15px;" width=575px>
                   <v-icon medium>navigation</v-icon>{{trip.start}} TO {{trip.end}}
                   <v-spacer></v-spacer>
                   <v-layout align-end>
                   <v-btn icon left  @click="deleteTrip(trip)"><v-icon>delete</v-icon></v-btn>
                     <v-flex xs3></v-flex>
-                    <v-flex xs2>
-                  <router-link :to="{ name: 'tripPlanning', params: {trip} }">
-                  <v-btn align-end color="info" v-on:click="sendInfo(trip.start,trip.end)">View trip details</v-btn>
+                    <v-flex xs2 style="padding: 10px;">
+                  <router-link style="text-decoration:none;" :to="{ name: 'tripPlanning', params: {trip} }">
+                  <v-btn style="border-radius:7px;" align-end color="info" v-on:click="sendInfo(trip.start,trip.end)">View trip details</v-btn>
                   </router-link>
                     </v-flex>
                   <v-spacer></v-spacer>
