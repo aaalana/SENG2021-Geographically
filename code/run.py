@@ -7,6 +7,7 @@ from resources.Routing import *
 from resources.parse import *
 from resources.Weather import *
 from resources.Music import *
+from resources.Playlist import *
 from pymongo import MongoClient
 
 ### Import resources
@@ -116,9 +117,17 @@ class LocWeather(Resource):
 
 class Spotify(Resource):
     def get(self):
-        music = Music.searchPlaylist()
+        music = Music.searchPlaylist(route[0]['end'])
         print(music)
         return music
+
+class genPlaylist(Resource):
+    def get(self):
+        locationID = Weather.getLocationID(route[0]['end'])[0]["id"]
+        weather = Weather.getWeather(locationID)
+        print(locationID)
+        Playlist.createPlaylist(weather["forecasts"]["weather"]["days"][0]["entries"][0]["precis"], route[0]['end'])
+        return weather
 
 api.add_resource(Recommendations, '/recommendation')
 api.add_resource(Routing, '/trips')
@@ -128,6 +137,7 @@ api.add_resource(Location, '/location')
 api.add_resource(CurrentLocation, '/current')
 api.add_resource(LocWeather, '/trips/weather')
 api.add_resource(Spotify, '/trips/music')
+api.add_resource(genPlaylist, '/trips/genplaylists')
 @app.route('/')
 def test_page():
     return Recommendations

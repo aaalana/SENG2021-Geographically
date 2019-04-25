@@ -7,7 +7,7 @@
         <h1 style="font-family:Quicksand;padding:30px;font-size:30px">Your Trip</h1>
         <p style="font-size:20px;padding:5px">Destination: {{location}}</p>
         <img id = "playlisticon" src="../assets/playlisticon.png" style="padding:30px" height="522px" width="522px">
-        <v-btn class="mt-5" id="start" round color="info" med>Generate Your Playlist!</v-btn>
+        <v-btn class="mt-5" id="start" round color="info" med v-on:click="genPlaylist">Generate Your Playlist!</v-btn>
       </v-flex>
       <v-flex xs12>
         <h2 style="font-family:Quicksand;padding:30px;font-size:30px">Your Playlist Recommendations</h2>
@@ -39,7 +39,8 @@ export default {
     return {
       result: [],
             playlists: "",
-            location: ""
+            location: "",
+            holder: "",
         };
     }, 
   mounted() {
@@ -55,6 +56,17 @@ export default {
         .then((res) => {
           this.result = res.data;
           this.playlists= res.data['playlists']['items']
+        })
+        .catch((error) => {
+          // eslint-disable-next-line
+          console.error(error);
+        });
+    },
+    genPlaylist() {
+      const path = 'http://localhost:5000/trips/genplaylists';
+      axios.get(path)
+        .then((res) => {
+          this.holder = res.data;
         })
         .catch((error) => {
           // eslint-disable-next-line

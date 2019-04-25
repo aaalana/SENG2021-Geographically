@@ -39,7 +39,7 @@
               </template>
               <v-card>
               <v-card-text class="grey lighten-3">
-                <div class="subheading">Several APIs are used including Google maps, Wikipedia, Spotify and WillyWeather.</div>
+                <div class="subheading">Several APIs are used including Google maps, Wikipedia, Spotify, Quill Editor, Sanitize-html and WillyWeather.</div>
               </v-card-text>
               </v-card>
               </v-expansion-panel-content>

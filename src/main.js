@@ -6,6 +6,9 @@ import 'vuetify/dist/vuetify.min.css'
 import VueRouter from 'vue-router'
 import router from './router'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import sanitizeHTML from 'sanitize-html';
+
+Vue.prototype.$sanitize = sanitizeHTML
 
 Vue.use(VueRouter)
 
